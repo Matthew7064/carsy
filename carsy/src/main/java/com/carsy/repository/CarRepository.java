@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Transactional
 @Repository
-public interface CarRepository extends JpaRepository<Car, Long> {
-    Car findById(long id);
-}
+public interface CarRepository extends JpaRepository<Car, Long> {}

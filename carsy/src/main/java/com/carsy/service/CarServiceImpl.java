@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -26,8 +27,32 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public void editCar(Car car) {
-        carRepository.save(car);
+    public Car editCar(Car car, long id) {
+        Car foundCar = carRepository.findById(id).orElse(null);
+        if (foundCar != null) {
+            foundCar.setBrand(car.getBrand());
+            foundCar.setModel(car.getModel());
+            foundCar.setYear(car.getYear());
+            foundCar.setValue(car.getValue());
+            foundCar.setRentalPricePerDay(car.getRentalPricePerDay());
+            return carRepository.save(foundCar);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public Car updateCar(Car car, long id) {
+        Car foundCar = carRepository.findById(id).orElse(null);
+        if (foundCar != null) {
+            if (car.getBrand() != null) foundCar.setBrand(car.getBrand());
+            if (car.getModel() != null) foundCar.setModel(car.getModel());
+            if (car.getYear() > 0) foundCar.setYear(car.getYear());
+            if (car.getValue() != null) foundCar.setValue(car.getValue());
+            if (car.getRentalPricePerDay() != null) foundCar.setRentalPricePerDay(car.getRentalPricePerDay());
+            return carRepository.save(foundCar);
+        }
+        return null;
     }
 
     @Override
@@ -45,6 +70,7 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public Car findCar(long id) {
-        return carRepository.findById(id);
+        Optional<Car> car = carRepository.findById(id);
+        return car.orElse(null);
     }
 }
