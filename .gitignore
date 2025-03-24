@@ -1,5 +1,5 @@
 .idea/
-!apache-tomcat-11.0.4/**
+/apache-tomcat-11.0.4/
 
 # Compiled class file
 *.class
