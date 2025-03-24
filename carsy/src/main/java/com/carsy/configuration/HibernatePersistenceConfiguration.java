@@ -36,6 +36,7 @@ public class HibernatePersistenceConfiguration {
         properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("hibernate.default_schema", "public");
+        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
         return properties;
     }
 
