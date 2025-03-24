@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "5872c214-82d3-4a62-87a1-ce5d02fa8d37",
+		"name": "carsy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20003081"
+	},
+	"item": [
+		{
+			"name": "Save car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Kia\",\r\n    \"model\": \"K4\",\r\n    \"year\": 2022,\r\n    \"value\": 85000.00,\r\n    \"rentalPricePerDay\": 250.00\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save second car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Kia\",\r\n    \"model\": \"Ceed\",\r\n    \"year\": 2020,\r\n    \"value\": 75000.00,\r\n    \"rentalPricePerDay\": 200.00\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save third car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"CHR\",\r\n    \"year\": 2021,\r\n    \"value\": 50000.00,\r\n    \"rentalPricePerDay\": 150.00\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get car",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cars/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update car",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Kia\",\r\n    \"model\": \"K5\",\r\n    \"year\": 2022,\r\n    \"value\": 85000.00,\r\n    \"rentalPricePerDay\": 250.00\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/cars/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partially update car",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"model\": \"K6\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/cars/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cars/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
