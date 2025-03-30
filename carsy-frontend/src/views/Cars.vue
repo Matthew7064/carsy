@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import CarCard from "../components/CarCard.vue";
+import config from "@/config.js";
 
 const cars = ref([]);
 
@@ -57,7 +58,7 @@ const mockData = [
 
 const fetchCars = async () => {
   try {
-    const response = await fetch("http://localhost:8080/cars");
+    const response = await fetch(config.API_BASE_URL + "/cars");
     if (!response.ok) throw new Error("Failed to fetch");
     cars.value = await response.json();
   } catch (error) {
@@ -71,7 +72,7 @@ onMounted(fetchCars);
 
 <template>
   <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-6 mb-4 col-span-12 row-span-12 p-4">
-    🚗 Car Rental - Select a Car
+    Car Rental - Select a Car
   </h1>
   <div class="col-span-12 row-span-12 flex flex-col items-center w-full min-h-screen">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-7xl p-4">
