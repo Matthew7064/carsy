@@ -6,10 +6,8 @@ import Cars from "../views/Cars.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {path: '/', component: Cars},
+        {path: '/management', component: Cars},
         { path: "/list", component: CarList },
-        { path: "/add", component: CarForm },
-        { path: "/edit/:id", component: CarForm, props: true },
     ],
 });
 

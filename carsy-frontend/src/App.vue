@@ -1,16 +1,16 @@
 <script setup>
+import NavBar from './components/NavBar.vue';
+import SideBar from './components/SideBar.vue';
 import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <nav class="bg-blue-500 text-white p-4 flex justify-between">
-    <router-link to="/" class="text-lg">Car Management</router-link>
-  </nav>
-  <router-view />
+  <NavBar />
+  <SideBar />
+  <RouterView class="" />
 </template>
 
 <style>
-/*
 #app {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -24,5 +24,4 @@ import { RouterView } from 'vue-router';
     grid-template-columns: repeat(2, 96px) repeat(10, 1fr);
   }
 }
- */
 </style>

@@ -1,67 +1,50 @@
 <template>
-  <div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-4">{{ isEdit ? "Edit Car" : "Add Car" }}</h1>
-
-    <form @submit.prevent="saveCar" class="bg-white p-6 shadow rounded-lg">
-      <div class="mb-4">
-        <label class="block text-gray-700">Brand</label>
-        <input v-model="car.brand" type="text" class="w-full border p-2 rounded" required />
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700">Model</label>
-        <input v-model="car.model" type="text" class="w-full border p-2 rounded" required />
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700">Year</label>
-        <input v-model="car.year" type="number" class="w-full border p-2 rounded" required />
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700">Value</label>
-        <input v-model="car.value" type="number" class="w-full border p-2 rounded" required />
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700">Rental Price Per Day</label>
-        <input v-model="car.rentalPricePerDay" type="number" class="w-full border p-2 rounded" required />
-      </div>
-
-      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">
-        {{ isEdit ? "Update Car" : "Add Car" }}
-      </button>
-    </form>
+  <div v-if="show" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="absolute inset-0 bg-black opacity-50" @click="close"></div>
+    <div class="bg-zinc-800 p-8 rounded-lg shadow-lg z-10 max-w-lg w-full text-white">
+      <h2 class="text-2xl font-bold mb-6">{{ isEdit ? "Edit Car" : "Add Car" }}</h2>
+      <form @submit.prevent="submit" class="space-y-4">
+        <div>
+          <label class="block text-gray-300">Brand</label>
+          <input v-model="car.brand" type="text" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
+          <label class="block text-gray-300">Model</label>
+          <input v-model="car.model" type="text" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
+          <label class="block text-gray-300">Year</label>
+          <input v-model="car.year" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
+          <label class="block text-gray-300">Value</label>
+          <input v-model="car.value" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
+          <label class="block text-gray-300">Rental Price Per Day</label>
+          <input v-model="car.rentalPricePerDay" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors">
+          {{ isEdit ? "Update Car" : "Add Car" }}
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import config from "@/config.js";
-
 export default {
-  props: ["id"],
-  data() {
-    return {
-      car: { brand: "", model: "", year: "", value: "", rentalPricePerDay: "" },
-      isEdit: false,
-    };
-  },
-  async created() {
-    if (this.id) {
-      this.isEdit = true;
-      const response = await axios.get(config.API_BASE_URL + `/cars/${this.id}`);
-      this.car = response.data;
-    }
+  props: {
+    show: Boolean,
+    car: Object,
+    isEdit: Boolean,
   },
   methods: {
-    async saveCar() {
-      if (this.isEdit) {
-        await axios.put(config.API_BASE_URL + `/cars/${this.id}`, this.car);
-      } else {
-        await axios.post(config.API_BASE_URL + "/cars", this.car);
-      }
-      this.$router.push("/list");
+    close() {
+      this.$emit("close");
+    },
+    submit() {
+      this.$emit("submit", this.car);
     },
   },
 };
