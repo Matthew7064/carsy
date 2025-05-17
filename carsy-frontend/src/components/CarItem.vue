@@ -46,48 +46,37 @@ export default {
       </RouterLink>
       <ul class="grid grid-cols-2 gap-8 md:grid-cols-5">
         <CarStatItem
-          parameter="Silnik"
-          :value="`${
-						car.eng_displacement ? `${car.eng_displacement.toFixed(1)} ` : ''
-					}${car.eng_info ? `${car.eng_info} ` : ''}| ${car.eng_power}KM | ${
-						car.eng_torque
-					}Nm`"
+          parameter="Engine"
+          :value="`${car.eng_power ? car.eng_power : 420}KM`"
         ><IconEngine
         /></CarStatItem>
-        <CarStatItem parameter="0-100 km/h" :value="`${car.time_100}s`"
+        <CarStatItem parameter="0-100 km/h" :value="`${car.time_100 ? car.time_100 : '42'}s`"
         ><IconTimer
         /></CarStatItem>
-        <CarStatItem parameter="Prędkość" :value="`${car.top_speed} km/h`"
+        <CarStatItem parameter="Top Speed" :value="`${car.top_speed ? car.top_speed : '420'} km/h`"
         ><IconSpeed
         /></CarStatItem>
         <CarStatItem
-          parameter="Skrzynia"
+          parameter="Transmission"
           :value="`${
-						car.transmission_type === 'Manual' ? 'Manualna' : 'Automatyczna'
+						car.transmission_type === 'Manual' ? 'Manual' : 'Automatic'
 					}`"
         ><IconTransmission
         /></CarStatItem>
         <CarStatItem
-          parameter="Napęd"
-          :value="car.drive"
-          :value-title="`${
-						car.drive === 'AWD'
-							? 'Na wszystkie koła'
-							: car.drive === 'FWD'
-							? 'Na przednie koła'
-							: 'Na tylne koła'
-					}`"
+          parameter="Drive"
+          :value="`${car.drive ? car.drive : 'FWD'}`"
         ><IconDrive
         /></CarStatItem>
       </ul>
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <RouterLink :to="`/cars/${car.id_car}`">
-          <ButtonSecondary>Zarezerwuj</ButtonSecondary>
+        <RouterLink :to="`/cars/${car.id_car}`" hidden>
+          <ButtonSecondary>Book</ButtonSecondary>
         </RouterLink>
         <span class="text-zinc-400 font-medium"
-        >już od
-					<span class="text-red-500 font-bold">{{ car.price_deposit }} zł</span>
-					za dobę!</span
+        >only
+					<span class="text-red-500 font-bold">{{ car.rentalPricePerDay }} zł</span>
+					a day!</span
         >
       </div>
     </div>

@@ -1,5 +1,6 @@
 <template >
-  <div class="flex flex-col items-center w-full h-full p-6 bg-zinc-700 text-white col-span-full sm:col-start-3 sm:col-end-13 row-start-2 row-span-11">
+  <main class="col-start-1 sm:col-start-2 lg:col-start-3 col-end-13 row-start-2 row-end-[13] flex flex-col items-center justify-center overflow-y-auto lg:pl-0 p-4 text-white bg-zinc-700">
+  <div class="flex flex-col items-center w-full h-full">
     <h2 class="text-2xl font-bold text-center my-2">{{ cars.length }} cars available</h2>
     <button @click="openAddModal" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg mb-6 transition-colors">
       Add New Car
@@ -40,6 +41,7 @@
     <div v-else class="my-4 text-xl text-center">No cars available</div>
     <CarForm :show="showModal" :car="selectedCar" :isEdit="isEdit" @close="closeModal" @submit="handleSubmit" />
   </div>
+  </main>
 </template>
 
 <script>
@@ -88,12 +90,13 @@ export default {
     },
     async handleSubmit(car) {
       try {
+        if (!car.value) return false;
         if (this.isEdit) {
           await axios.put(config.API_BASE_URL + `/cars/${car.id}`, car);
         } else {
           await axios.post(config.API_BASE_URL + "/cars", car);
         }
-        this.fetchCars();
+        await this.fetchCars();
       } catch (error) {
         console.error("Error saving car:", error);
       } finally {

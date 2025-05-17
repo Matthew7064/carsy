@@ -1,82 +1,118 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import CarCard from "../components/CarCard.vue";
+<script>
+import axios from "axios";
 import config from "@/config.js";
+import CarItem from '../components/CarItem.vue';
+import ButtonPrimary from '../components/ButtonPrimary.vue';
+import ButtonSecondary from '../components/ButtonSecondary.vue';
 
-const cars = ref([]);
-
-const mockData = [
-  {
-    id: 1,
-    brand: "Jeep",
-    model: "Renegade",
-    year: 2021,
-    value: 25000.0,
-    rentalPricePerDay: 200.0,
+export default {
+  components: { CarItem, ButtonPrimary, ButtonSecondary },
+  data() {
+    return {
+      cars: [],
+      isLoading: true,
+      model: '',
+    };
   },
-  {
-    id: 2,
-    brand: "Toyota",
-    model: "Corolla",
-    year: 2022,
-    value: 22000.0,
-    rentalPricePerDay: 180.0,
+  created() {
+    this.fetchCars();
   },
-  {
-    id: 3,
-    brand: "Jeep",
-    model: "Renegade",
-    year: 2021,
-    value: 25000.0,
-    rentalPricePerDay: 200.0,
+  methods: {
+    async fetchCars() {
+      this.isLoading = true;
+      try {
+        const response = await axios.get(config.API_BASE_URL + "/cars");
+        const allCars = response.data;
+        this.cars = this.model
+            ? allCars.filter(car => car.model.toLowerCase().includes(this.model.toLowerCase()))
+            : allCars;
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+        this.cars = [];
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    clear() {
+      this.model = '';
+      this.fetchCars();
+    },
   },
-  {
-    id: 4,
-    brand: "Toyota",
-    model: "Corolla",
-    year: 2022,
-    value: 22000.0,
-    rentalPricePerDay: 180.0,
-  },
-  {
-    id: 5,
-    brand: "Jeep",
-    model: "Renegade",
-    year: 2021,
-    value: 25000.0,
-    rentalPricePerDay: 200.0,
-  },
-  {
-    id: 6,
-    brand: "Toyota",
-    model: "Corolla",
-    year: 2022,
-    value: 22000.0,
-    rentalPricePerDay: 180.0,
-  },
-];
-
-const fetchCars = async () => {
-  try {
-    const response = await fetch(config.API_BASE_URL + "/cars");
-    if (!response.ok) throw new Error("Failed to fetch");
-    cars.value = await response.json();
-  } catch (error) {
-    console.error("Error fetching cars:", error);
-    cars.value = mockData;
-  }
 };
-
-onMounted(fetchCars);
 </script>
 
 <template>
-  <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-6 mb-4 col-span-12 row-span-12 p-4">
-    Car Rental - Select a Car
-  </h1>
-  <div class="col-span-12 row-span-12 flex flex-col items-center w-full min-h-screen">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-7xl p-4">
-      <car-card v-for="car in cars" :key="car.id" :item="car" />
+  <main
+      class="col-start-1 sm:col-start-2 xl:col-start-3 col-end-13 row-start-2 row-end-[13] flex flex-col items-center overflow-y-auto xl:pl-0 p-4 text-white bg-zinc-700"
+  >
+    <h1 class="text-4xl lg:text-5xl font-bold text-center py-4">Cars available to rent</h1>
+
+    <div
+        class="flex flex-col items-center max-w-screen-sm lg:max-w-screen-2xl w-full"
+    >
+      <div class="flex flex-col self-center lg:self-end mb-8 mx-0 lg:mx-6">
+        <form @submit.prevent="fetchCars">
+          <div class="flex flex-col">
+            <label for="model">Model</label>
+            <input
+                id="model"
+                v-model="model"
+                type="text"
+                name="model"
+                class="mt-1 mb-2 px-4 py-2 rounded-md bg-zinc-800 outline-none border border-zinc-600 focus:border-red-500 focus:ring focus:ring-red-500/50 text-lg"
+            />
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input
+                type="submit"
+                value="Search"
+                class="w-full px-7 py-3 text-sm uppercase font-bold text-white bg-red-500 border-2 border-red-500 hover:bg-zinc-900 hover:border-zinc-900 transition-colors cursor-pointer"
+            />
+            <input
+                type="reset"
+                value="Clear"
+                class="w-full px-7 py-3 text-sm uppercase font-bold text-red-500 bg-transparent border-2 border-red-500 hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition-colors cursor-pointer"
+                @click="clear"
+            />
+          </div>
+        </form>
+      </div>
+      <ul
+          v-if="cars.length > 0"
+          class="flex flex-col items-center gap-y-16 z-0 mx-0 lg:mx-6"
+      >
+        <CarItem v-for="car in cars" :key="car.id_car" :car="car" />
+      </ul>
+      <div
+          v-else-if="isLoading"
+          class="col-start-2 lg:col-start-3 col-end-13 row-start-2 row-end-[13] flex flex-col justify-center items-center bg-zinc-700"
+      >
+        <svg
+            class="animate-spin h-24 w-24 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+          <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+          ></circle>
+          <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
+      <div v-else-if="cars.length === 0" class="my-4 text-xl text-center">
+        No cars available to rent
+      </div>
     </div>
-  </div>
+  </main>
 </template>
+
+<style scoped></style>

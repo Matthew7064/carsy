@@ -16,6 +16,9 @@ export default {
         <SideBarItem to="/list" tooltip="Car List">
           <IconCar />
         </SideBarItem>
+        <SideBarItem to="/cars" tooltip="Car Rental">
+          <IconCar />
+        </SideBarItem>
       </div>
     </ul>
   </aside>

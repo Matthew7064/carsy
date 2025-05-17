@@ -23,6 +23,7 @@ export default {
       <ul class="flex flex-row first:-ml-8">
         <NavItem to="/" class="p-8">Main Page</NavItem>
         <NavItem to="/list" class="p-8">Car List</NavItem>
+        <NavItem to="/cars" class="p-8">Car Rental</NavItem>
       </ul>
     </nav>
     <div
@@ -65,6 +66,7 @@ export default {
           <ul class="flex flex-col items-center justify-center gap-2 mt-4">
             <NavItem to="/" class="p-4">Main Page</NavItem>
             <NavItem to="/list" class="p-4">Car List</NavItem>
+            <NavItem to="/cars" class="p-4">Car Rental</NavItem>
           </ul>
         </div>
       </Transition>
