@@ -1,17 +1,16 @@
 package com.carsy.controller;
 
-import com.carsy.model.Car;
+import com.carsy.model.car.Car;
 import com.carsy.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
-@Controller
+@RestController
 @RequestMapping("/cars")
 public class CarController {
     private final CarService carService;

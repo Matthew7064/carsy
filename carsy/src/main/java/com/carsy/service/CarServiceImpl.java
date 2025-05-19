@@ -1,6 +1,6 @@
 package com.carsy.service;
 
-import com.carsy.model.Car;
+import com.carsy.model.car.Car;
 import com.carsy.repository.CarRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

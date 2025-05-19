@@ -1,6 +1,6 @@
 package com.carsy.service;
 
-import com.carsy.model.Car;
+import com.carsy.model.car.Car;
 
 import java.util.List;
 
