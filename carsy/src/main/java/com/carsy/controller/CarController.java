@@ -2,6 +2,7 @@ package com.carsy.controller;
 
 import com.carsy.model.car.Car;
 import com.carsy.service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,20 +35,20 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+    public ResponseEntity<Car> addCar(@RequestBody @Valid Car car) {
         carService.addCar(car);
         return ResponseEntity.status(HttpStatus.CREATED).body(car);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> editCar(@PathVariable ("id") Long id, @RequestBody Car car) {
+    public ResponseEntity<Car> editCar(@PathVariable ("id") Long id, @RequestBody @Valid Car car) {
         Car updatedCar = carService.editCar(car, id);
         if (updatedCar != null) return ResponseEntity.ok(updatedCar);
         return ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable ("id") Long id, @RequestBody Car car) {
+    public ResponseEntity<Car> updateCar(@PathVariable ("id") Long id, @RequestBody @Valid Car car) {
         Car updatedCar = carService.updateCar(car, id);
         if (updatedCar != null) return ResponseEntity.ok(updatedCar);
         return ResponseEntity.notFound().build();
