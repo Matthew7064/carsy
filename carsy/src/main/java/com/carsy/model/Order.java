@@ -44,7 +44,6 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
     public long getId() {
         return id;
     }

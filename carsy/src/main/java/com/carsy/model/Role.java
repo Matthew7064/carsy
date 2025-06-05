@@ -1,7 +1,7 @@
 package com.carsy.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "roles")
@@ -10,10 +10,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String role;
-
 
     public long getId() {
         return id;
@@ -23,11 +22,11 @@ public class Role {
         this.id = id;
     }
 
-    public @NotNull String getRole() {
+    public @NotBlank String getRole() {
         return role;
     }
 
-    public void setRole(@NotNull String role) {
+    public void setRole(@NotBlank String role) {
         this.role = role;
     }
 }

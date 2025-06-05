@@ -1,7 +1,7 @@
 package com.carsy.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,26 +15,26 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String street;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String number;
 
     private String flatNumber;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     @Pattern(regexp = "\\d{2}-\\d{3}", message = "Postal code must be in format: XX-XXX")
     private String postalCode;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String city;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String country;
 
@@ -44,7 +44,6 @@ public class Address {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
     public long getId() {
         return id;
     }
@@ -53,19 +52,19 @@ public class Address {
         this.id = id;
     }
 
-    public @NotNull String getStreet() {
+    public @NotBlank String getStreet() {
         return street;
     }
 
-    public void setStreet(@NotNull String street) {
+    public void setStreet(@NotBlank String street) {
         this.street = street;
     }
 
-    public @NotNull String getNumber() {
+    public @NotBlank String getNumber() {
         return number;
     }
 
-    public void setNumber(@NotNull String number) {
+    public void setNumber(@NotBlank String number) {
         this.number = number;
     }
 
@@ -77,27 +76,27 @@ public class Address {
         this.flatNumber = flatNumber;
     }
 
-    public @NotNull @Pattern(regexp = "\\d{2}-\\d{3}", message = "Postal code must be in format: XX-XXX") String getPostalCode() {
+    public @NotBlank @Pattern(regexp = "\\d{2}-\\d{3}", message = "Postal code must be in format: XX-XXX") String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(@NotNull @Pattern(regexp = "\\d{2}-\\d{3}", message = "Postal code must be in format: XX-XXX") String postalCode) {
+    public void setPostalCode(@NotBlank @Pattern(regexp = "\\d{2}-\\d{3}", message = "Postal code must be in format: XX-XXX") String postalCode) {
         this.postalCode = postalCode;
     }
 
-    public @NotNull String getCity() {
+    public @NotBlank String getCity() {
         return city;
     }
 
-    public void setCity(@NotNull String city) {
+    public void setCity(@NotBlank String city) {
         this.city = city;
     }
 
-    public @NotNull String getCountry() {
+    public @NotBlank String getCountry() {
         return country;
     }
 
-    public void setCountry(@NotNull String country) {
+    public void setCountry(@NotBlank String country) {
         this.country = country;
     }
 

@@ -3,7 +3,7 @@ package com.carsy.model;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,39 +20,39 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "\\d{11}", message = "PESEL must have 11 digits")
     private String pesel;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String surname;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     @Email
     private String email;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}", message = "Phone number must have format: +XX-XXX-XXX-XXX")
     private String phoneNumber;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "\\d{26}", message = "Account number must have 26 digits")
     private String accountNumber;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String login;
 
-    @NotNull
+    @NotBlank
     @Column(nullable = false)
     private String password;
 
@@ -86,7 +86,6 @@ public class User {
         return Objects.hash(id);
     }
 
-
     public long getId() {
         return id;
     }
@@ -95,67 +94,67 @@ public class User {
         this.id = id;
     }
 
-    public @NotNull @Pattern(regexp = "\\d{11}", message = "PESEL must have 11 digits") String getPesel() {
+    public @NotBlank @Pattern(regexp = "\\d{11}", message = "PESEL must have 11 digits") String getPesel() {
         return pesel;
     }
 
-    public void setPesel(@NotNull @Pattern(regexp = "\\d{11}", message = "PESEL must have 11 digits") String pesel) {
+    public void setPesel(@NotBlank @Pattern(regexp = "\\d{11}", message = "PESEL must have 11 digits") String pesel) {
         this.pesel = pesel;
     }
 
-    public @NotNull String getName() {
+    public @NotBlank String getName() {
         return name;
     }
 
-    public void setName(@NotNull String name) {
+    public void setName(@NotBlank String name) {
         this.name = name;
     }
 
-    public @NotNull String getSurname() {
+    public @NotBlank String getSurname() {
         return surname;
     }
 
-    public void setSurname(@NotNull String surname) {
+    public void setSurname(@NotBlank String surname) {
         this.surname = surname;
     }
 
-    public @NotNull @Email String getEmail() {
+    public @NotBlank @Email String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotNull @Email String email) {
+    public void setEmail(@NotBlank @Email String email) {
         this.email = email;
     }
 
-    public @NotNull @Pattern(regexp = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}", message = "Phone number must have format: +XX-XXX-XXX-XXX") String getPhoneNumber() {
+    public @NotBlank @Pattern(regexp = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}", message = "Phone number must have format: +XX-XXX-XXX-XXX") String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(@NotNull @Pattern(regexp = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}", message = "Phone number must have format: +XX-XXX-XXX-XXX") String phoneNumber) {
+    public void setPhoneNumber(@NotBlank @Pattern(regexp = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}", message = "Phone number must have format: +XX-XXX-XXX-XXX") String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public @NotNull @Pattern(regexp = "\\d{26}", message = "Account number must have 26 digits") String getAccountNumber() {
+    public @NotBlank @Pattern(regexp = "\\d{26}", message = "Account number must have 26 digits") String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(@NotNull @Pattern(regexp = "\\d{26}", message = "Account number must have 26 digits") String accountNumber) {
+    public void setAccountNumber(@NotBlank @Pattern(regexp = "\\d{26}", message = "Account number must have 26 digits") String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    public @NotNull String getLogin() {
+    public @NotBlank String getLogin() {
         return login;
     }
 
-    public void setLogin(@NotNull String login) {
+    public void setLogin(@NotBlank String login) {
         this.login = login;
     }
 
-    public @NotNull String getPassword() {
+    public @NotBlank String getPassword() {
         return password;
     }
 
-    public void setPassword(@NotNull String password) {
+    public void setPassword(@NotBlank String password) {
         this.password = password;
     }
 

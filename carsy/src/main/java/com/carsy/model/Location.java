@@ -32,7 +32,6 @@ public class Location {
     @JsonBackReference
     private Car car;
 
-
     public long getId() {
         return id;
     }
