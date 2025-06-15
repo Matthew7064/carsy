@@ -13,6 +13,10 @@
           <input v-model="car.model" type="text" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
         </div>
         <div>
+          <label class="block text-gray-300">Registration Number</label>
+          <input v-model="car.license_plate" type="text" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
           <label class="block text-gray-300">Year</label>
           <input v-model="car.year" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
         </div>
@@ -21,8 +25,8 @@
           <input v-model="car.value" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
         </div>
         <div>
-          <label class="block text-gray-300">Rental Price Per Day</label>
-          <input v-model="car.rentalPricePerDay" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+          <label class="block text-gray-300">Mileage</label>
+          <input v-model="car.mileage" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
         </div>
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors">
           {{ isEdit ? "Update Car" : "Add Car" }}
