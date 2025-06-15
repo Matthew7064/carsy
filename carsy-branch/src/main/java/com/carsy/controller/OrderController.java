@@ -4,6 +4,7 @@ import com.carsy.model.Order;
 import com.carsy.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,12 @@ public class OrderController {
         Order order = orderService.findOrder(id);
         if (order != null) return ResponseEntity.ok(order);
         else return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Order> addOrder(@RequestBody @Valid Order order) {
+        orderService.addOrder(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
     @PutMapping("/{id}")

@@ -11,5 +11,5 @@ public interface OrderService {
     Order updateOrder(Order order, UUID id);
     List<Order> findAllOrders();
     void removeOrder(UUID id);
-    Order findOrder(UUID id);//todo add sync paid
+    Order findOrder(UUID id);
 }
