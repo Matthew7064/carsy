@@ -6,7 +6,6 @@ import com.carsy.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,37 +37,11 @@ public class CarController {
         else return ResponseEntity.notFound().build();
     }
 
-    @PostMapping
-    public ResponseEntity<Car> addCar(@RequestBody @Valid Car car) {
-        carService.addCar(car);
-        return ResponseEntity.status(HttpStatus.CREATED).body(car);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Car> editCar(@PathVariable ("id") UUID id, @RequestBody @Valid Car car) {
-        Car updatedCar = carService.editCar(car, id);
-        if (updatedCar != null) return ResponseEntity.ok(updatedCar);
-        return ResponseEntity.notFound().build();
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<Car> updateCar(@PathVariable ("id") UUID id, @RequestBody @Valid Car car) {
         Car updatedCar = carService.updateCar(car, id);
         if (updatedCar != null) return ResponseEntity.ok(updatedCar);
         return ResponseEntity.notFound().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeCar(@PathVariable ("id") UUID id) {
-        carService.removeCar(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/{carId}/assign/{branchId}")
-    public ResponseEntity<Void> assignCarToBranch(@PathVariable("carId") UUID carId, @PathVariable("branchId") UUID branchId) {
-        boolean success = carService.assignToBranch(carId, branchId);
-        if (success) return ResponseEntity.ok().build();
-        else return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{id}/locations")

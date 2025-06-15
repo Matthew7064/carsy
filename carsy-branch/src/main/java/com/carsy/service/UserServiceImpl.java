@@ -3,10 +3,8 @@ package com.carsy.service;
 import com.carsy.dto.AddressDTO;
 import com.carsy.dto.UserDTO;
 import com.carsy.model.Address;
-import com.carsy.model.Branch;
 import com.carsy.model.Role;
 import com.carsy.model.User;
-import com.carsy.repository.BranchRepository;
 import com.carsy.repository.RoleRepository;
 import com.carsy.repository.UserRepository;
 import com.carsy.utils.AddressUtils;
@@ -19,13 +17,11 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BranchRepository branchRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BranchRepository branchRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.branchRepository = branchRepository;
     }
 
     @Override
@@ -46,7 +42,6 @@ public class UserServiceImpl implements UserService {
             foundUser.setLogin(user.getLogin());
             foundUser.setPassword(user.getPassword());
             updateRoles(user, foundUser);
-            updateBranches(user, foundUser);
             AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
             return userRepository.save(foundUser);
         }
@@ -66,7 +61,6 @@ public class UserServiceImpl implements UserService {
             if (user.getLogin() != null) foundUser.setLogin(user.getLogin());
             if (user.getPassword() != null) foundUser.setPassword(user.getPassword());
             if (user.getRoles() != null) updateRoles(user, foundUser);
-            if (user.getBranches() != null) updateBranches(user, foundUser);
             if (user.getAddress() != null) AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
             return userRepository.save(foundUser);
         }
@@ -126,9 +120,6 @@ public class UserServiceImpl implements UserService {
             else address.setFlatNumber(null);
             user.setAddress(address);
 
-            Branch branch = branchRepository.findById(dto.branchId()).orElse(null);
-            if (branch != null) user.getBranches().add(branch);
-
             userRepository.save(user);
         }
     }
@@ -140,15 +131,5 @@ public class UserServiceImpl implements UserService {
             attachedRoles.add(attachedRole);
         }
         foundUser.setRoles(attachedRoles);
-    }
-
-    private void updateBranches(User user, User foundUser) {
-        Set<Branch> attachedBranches = new HashSet<>();
-        for (Branch branch: user.getBranches()) {
-            Branch attachedBranch = branchRepository.findById(branch.getId()).orElseThrow(() -> new IllegalArgumentException("Branch not found, id: " + branch.getId()));
-            attachedBranch.getUsers().add(foundUser);
-            attachedBranches.add(attachedBranch);
-        }
-        foundUser.setBranches(attachedBranches);
     }
 }
