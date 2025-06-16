@@ -47,14 +47,8 @@ export default {
       <ul class="grid grid-cols-2 gap-8 md:grid-cols-5">
         <CarStatItem
           parameter="Engine"
-          :value="`${car.eng_power ? car.eng_power : 420}KM`"
+          :value="`${car.eng_power}KM`"
         ><IconEngine
-        /></CarStatItem>
-        <CarStatItem parameter="0-100 km/h" :value="`${car.time_100 ? car.time_100 : '42'}s`"
-        ><IconTimer
-        /></CarStatItem>
-        <CarStatItem parameter="Top Speed" :value="`${car.top_speed ? car.top_speed : '420'} km/h`"
-        ><IconSpeed
         /></CarStatItem>
         <CarStatItem
           parameter="Transmission"
@@ -63,19 +57,14 @@ export default {
 					}`"
         ><IconTransmission
         /></CarStatItem>
-        <CarStatItem
-          parameter="Drive"
-          :value="`${car.drive ? car.drive : 'FWD'}`"
-        ><IconDrive
-        /></CarStatItem>
       </ul>
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <RouterLink :to="`/cars/${car.id_car}`" hidden>
-          <ButtonSecondary>Book</ButtonSecondary>
+        <RouterLink :to="`/cars/${car.id_car}`">
+          <ButtonSecondary>Rent</ButtonSecondary>
         </RouterLink>
         <span class="text-zinc-400 font-medium"
-        >only
-					<span class="text-red-500 font-bold">{{ car.rentalPricePerDay }} zł</span>
+        >from
+					<span class="text-red-500 font-bold">{{ car.price_deposit }} zł</span>
 					a day!</span
         >
       </div>
