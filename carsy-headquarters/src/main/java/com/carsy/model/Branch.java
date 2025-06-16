@@ -4,6 +4,7 @@ import com.carsy.model.car.Car;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,6 +17,10 @@ public class Branch {
     @Id
     @Column(columnDefinition = "uuid", nullable = false)
     private UUID id;
+
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    private String url;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
@@ -52,6 +57,14 @@ public class Branch {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public @NotBlank String getUrl() {
+        return url;
+    }
+
+    public void setUrl(@NotBlank String url) {
+        this.url = url;
     }
 
     public @Valid Address getAddress() {

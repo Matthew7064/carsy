@@ -10,6 +10,7 @@ import com.carsy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -79,7 +80,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void syncOrders(List<OrderDTO> orders) {
+    public List<UUID> syncOrders(List<OrderDTO> orders) {
+        List<UUID> ids = new ArrayList<>();
         for (OrderDTO dto : orders) {
             Car car = carRepository.findById(dto.carId()).orElse(null);
             User user = userRepository.findById(dto.userId()).orElse(null);
@@ -93,8 +95,10 @@ public class OrderServiceImpl implements OrderService {
                 order.setEndDate(dto.endDate());
                 order.setPrice(dto.price());
                 orderRepository.save(order);
+                ids.add(order.getId());
             }
         }
+        return ids;
     }
 
     private void updateCar(Order order, Order foundOrder) {

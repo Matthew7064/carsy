@@ -17,5 +17,5 @@ public interface CarService {
     Car findCar(UUID id);
     boolean assignToBranch(UUID carId, UUID branchId);
     List<Location> getLocationsForCar(UUID carId, LocalDateTime since);
-    void syncCars(List<CarDTO> cars);
+    List<UUID> syncCars(List<CarDTO> cars);
 }

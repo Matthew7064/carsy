@@ -33,6 +33,8 @@ public class Location {
     @JsonBackReference
     private Car car;
 
+    private boolean synchronizedFlag;
+
     public Location() {
         this.id = UUID.randomUUID();
     }
@@ -75,5 +77,13 @@ public class Location {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public boolean isSynchronizedFlag() {
+        return synchronizedFlag;
+    }
+
+    public void setSynchronizedFlag(boolean synchronizedFlag) {
+        this.synchronizedFlag = synchronizedFlag;
     }
 }

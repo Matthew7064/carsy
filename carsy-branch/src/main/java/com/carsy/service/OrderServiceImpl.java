@@ -41,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
             foundOrder.setStartDate(order.getStartDate());
             foundOrder.setEndDate(order.getEndDate());
             foundOrder.setPrice(order.getPrice());
+            foundOrder.setSynchronizedFlag(false);
             return orderRepository.save(foundOrder);
         }
         return null;
@@ -56,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
             if (order.getStartDate() != null) foundOrder.setStartDate(order.getStartDate());
             if (order.getEndDate() != null) foundOrder.setEndDate(order.getEndDate());
             if (order.getPrice() != null) foundOrder.setPrice(order.getPrice());
+            foundOrder.setSynchronizedFlag(false);
             return orderRepository.save(foundOrder);
         }
         return null;

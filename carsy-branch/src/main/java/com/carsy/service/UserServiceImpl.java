@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
             foundUser.setPassword(user.getPassword());
             updateRoles(user, foundUser);
             AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
+            foundUser.setSynchronizedFlag(false);
             return userRepository.save(foundUser);
         }
         return null;
@@ -62,6 +63,7 @@ public class UserServiceImpl implements UserService {
             if (user.getPassword() != null) foundUser.setPassword(user.getPassword());
             if (user.getRoles() != null) updateRoles(user, foundUser);
             if (user.getAddress() != null) AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
+            foundUser.setSynchronizedFlag(false);
             return userRepository.save(foundUser);
         }
         return null;
@@ -94,6 +96,7 @@ public class UserServiceImpl implements UserService {
             user.setPhoneNumber(dto.phoneNumber());
             user.setAccountNumber(dto.accountNumber());
             user.setLogin(dto.login());
+            user.setPassword("password");
 
             Set<Role> roles = new HashSet<>();
             for (String roleName : dto.roles()) {

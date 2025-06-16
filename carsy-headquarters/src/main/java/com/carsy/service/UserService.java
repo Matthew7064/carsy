@@ -13,5 +13,5 @@ public interface UserService {
     List<User> findAllUsers();
     void removeUser(UUID id);
     User findUser(UUID id);
-    void syncUsers(List<UserDTO> users);
+    List<UUID> syncUsers(List<UserDTO> users);
 }

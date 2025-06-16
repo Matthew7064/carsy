@@ -14,4 +14,5 @@ public interface CarService {
     Car findCar(UUID id);
     List<Location> getLocationsForCar(UUID carId, LocalDateTime since);
     void syncCars(List<CarDTO> cars);
+    void deleteCar(UUID id);
 }

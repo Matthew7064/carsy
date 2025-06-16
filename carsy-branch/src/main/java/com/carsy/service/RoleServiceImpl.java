@@ -1,7 +1,9 @@
 package com.carsy.service;
 
 import com.carsy.model.Role;
+import com.carsy.model.User;
 import com.carsy.repository.RoleRepository;
+import com.carsy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.UUID;
 @Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -28,6 +32,11 @@ public class RoleServiceImpl implements RoleService {
         Role foundRole = roleRepository.findById(id).orElse(null);
         if (foundRole != null) {
             foundRole.setRole(role.getRole());
+            List<User> users = userRepository.findByRoles_Id(id);
+            for (User user : users) {
+                user.setSynchronizedFlag(false);
+            }
+            userRepository.saveAll(users);
             return roleRepository.save(foundRole);
         }
         return null;

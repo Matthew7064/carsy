@@ -32,6 +32,7 @@ public class CarServiceImpl implements CarService {
             if (car.getCarStatus() != null) foundCar.setCarStatus(car.getCarStatus());
             if (car.getMileage() > 0) foundCar.setMileage(car.getMileage());
             if (car.getLocations() != null) updateLocations(car, foundCar);
+            foundCar.setSynchronizedFlag(false);
             return carRepository.save(foundCar);
         }
         return null;
@@ -46,6 +47,11 @@ public class CarServiceImpl implements CarService {
     public Car findCar(UUID id) {
         Optional<Car> car = carRepository.findById(id);
         return car.orElse(null);
+    }
+
+    @Override
+    public void deleteCar(UUID id) {
+        carRepository.deleteById(id);
     }
 
     private void updateLocations(Car car, Car foundCar) {
@@ -75,12 +81,24 @@ public class CarServiceImpl implements CarService {
     @Override
     public void syncCars(List<CarDTO> cars) {
         for (CarDTO dto : cars) {
-            Car car = carRepository.findById(dto.id()).orElse(null);
-            if (car != null) {
-                car.setRentalPricePerDay(dto.rentalPricePerDay());
-                car.setInspectionExpiryDate(dto.inspectionExpiryDate());
-                car.setInsuranceExpiryDate(dto.insuranceExpiryDate());
-            }
+            Car car = carRepository.findById(dto.id()).orElse(new Car());
+            car.setId(dto.id());
+            car.setCarStatus(dto.carStatus());
+            car.setMileage(dto.mileage());
+            car.setRentalPricePerDay(dto.rentalPricePerDay());
+            car.setInspectionExpiryDate(dto.inspectionExpiryDate());
+            car.setInsuranceExpiryDate(dto.insuranceExpiryDate());
+            car.setVin(dto.vin());
+            car.setRegistrationNumber(dto.registrationNumber());
+            car.setBrand(dto.brand());
+            car.setModel(dto.model());
+            car.setYear(dto.year());
+            car.setValue(dto.value());
+            car.setFuel(dto.fuel());
+            car.setTransmission(dto.transmission());
+            car.setHorsepower(dto.horsepower());
+            car.setRegistrationDate(dto.registrationDate());
+            carRepository.save(car);
         }
     }
 }

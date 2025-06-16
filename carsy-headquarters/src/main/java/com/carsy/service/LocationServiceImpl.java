@@ -8,6 +8,7 @@ import com.carsy.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -45,7 +46,8 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void syncLocations(List<LocationDTO> locations) {
+    public List<UUID> syncLocations(List<LocationDTO> locations) {
+        List<UUID> ids = new ArrayList<>();
         for (LocationDTO dto : locations) {
             Car car = carRepository.findById(dto.carId()).orElse(null);
             if (car != null) {
@@ -56,7 +58,9 @@ public class LocationServiceImpl implements LocationService {
                 location.setLongitude(dto.longitude());
                 location.setTime(dto.time());
                 locationRepository.save(location);
+                ids.add(location.getId());
             }
         }
+        return ids;
     }
 }

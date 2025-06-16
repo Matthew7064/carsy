@@ -76,6 +76,8 @@ public class Car {
     @OrderBy("time ASC")
     private List<Location> locations = new ArrayList<>();
 
+    private boolean synchronizedFlag;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -227,5 +229,13 @@ public class Car {
 
     public void setLocations(List<Location> locations) {
         this.locations = locations;
+    }
+
+    public boolean isSynchronizedFlag() {
+        return synchronizedFlag;
+    }
+
+    public void setSynchronizedFlag(boolean synchronizedFlag) {
+        this.synchronizedFlag = synchronizedFlag;
     }
 }

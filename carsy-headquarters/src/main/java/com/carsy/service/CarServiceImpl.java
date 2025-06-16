@@ -148,13 +148,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void syncCars(List<CarDTO> cars) {
+    public List<UUID> syncCars(List<CarDTO> cars) {
+        List<UUID> ids = new ArrayList<>();
         for (CarDTO dto : cars) {
             Car car = carRepository.findById(dto.id()).orElse(null);
             if (car != null) {
                 car.setMileage(dto.mileage());
                 car.setCarStatus(dto.carStatus());
+                carRepository.save(car);
+                ids.add(car.getId());
             }
         }
+        return ids;
     }
 }

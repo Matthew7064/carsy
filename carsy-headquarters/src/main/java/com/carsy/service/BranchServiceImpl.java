@@ -34,6 +34,7 @@ public class BranchServiceImpl implements BranchService {
     public Branch editBranch(Branch branch, UUID id) {
         Branch foundBranch = branchRepository.findById(id).orElse(null);
         if (foundBranch != null) {
+            foundBranch.setUrl(branch.getUrl());
             AddressUtils.updateAddress(branch.getAddress(), foundBranch.getAddress());
             updateUsers(branch, foundBranch);
             updateCars(branch, foundBranch);
@@ -46,6 +47,7 @@ public class BranchServiceImpl implements BranchService {
     public Branch updateBranch(Branch branch, UUID id) {
         Branch foundBranch = branchRepository.findById(id).orElse(null);
         if (foundBranch != null) {
+            if (branch.getUrl() != null) foundBranch.setUrl(branch.getUrl());
             if (branch.getAddress() != null) AddressUtils.updateAddress(branch.getAddress(), foundBranch.getAddress());
             if (branch.getUsers() != null) updateUsers(branch, foundBranch);
             if (branch.getCars() != null) updateCars(branch, foundBranch);

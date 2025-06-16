@@ -1,6 +1,10 @@
 package com.carsy.controller;
 
 import com.carsy.model.Order;
+import com.carsy.model.car.Car;
+import com.carsy.model.car.CarStatus;
+import com.carsy.repository.CarRepository;
+import com.carsy.repository.OrderRepository;
 import com.carsy.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +20,14 @@ import java.util.UUID;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final CarRepository carRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, CarRepository carRepository, OrderRepository orderRepository) {
         this.orderService = orderService;
+        this.carRepository = carRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping
@@ -59,5 +67,16 @@ public class OrderController {
     public ResponseEntity<Void> removeOrder(@PathVariable("id") UUID id) {
         orderService.removeOrder(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/orders/{id}/return")
+    public ResponseEntity<String> returnCar(@PathVariable("id") UUID orderId) {
+        Order order = orderService.findOrder(orderId);
+        Car car = order.getCar();
+        car.setCarStatus(CarStatus.AVAILABLE);
+        carRepository.save(car);
+        order.setPaid(true);
+        orderRepository.save(order);
+        return ResponseEntity.ok("Car returned and order completed.");
     }
 }

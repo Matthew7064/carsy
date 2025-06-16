@@ -13,5 +13,5 @@ public interface OrderService {
     List<Order> findAllOrders();
     void removeOrder(UUID id);
     Order findOrder(UUID id);
-    void syncOrders(List<OrderDTO> orders);
+    List<UUID> syncOrders(List<OrderDTO> orders);
 }

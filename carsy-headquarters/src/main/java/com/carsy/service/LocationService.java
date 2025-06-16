@@ -11,5 +11,5 @@ public interface LocationService {
     List<Location> findAllLocations();
     void removeLocation(UUID id);
     Location findLocation(UUID id);
-    void syncLocations(List<LocationDTO> locations);
+    List<UUID> syncLocations(List<LocationDTO> locations);
 }

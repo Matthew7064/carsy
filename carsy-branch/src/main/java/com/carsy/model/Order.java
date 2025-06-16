@@ -37,6 +37,8 @@ public class Order {
     @Column(nullable = false)
     private BigDecimal price;
 
+    private boolean synchronizedFlag;
+
     public Order() {
         this.id = UUID.randomUUID();
     }
@@ -95,5 +97,13 @@ public class Order {
 
     public void setPrice(@NotNull BigDecimal price) {
         this.price = price;
+    }
+
+    public boolean isSynchronizedFlag() {
+        return synchronizedFlag;
+    }
+
+    public void setSynchronizedFlag(boolean synchronizedFlag) {
+        this.synchronizedFlag = synchronizedFlag;
     }
 }

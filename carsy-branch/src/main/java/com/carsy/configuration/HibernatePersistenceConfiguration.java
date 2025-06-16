@@ -29,6 +29,7 @@ public class HibernatePersistenceConfiguration {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/" + dbName + "?characterEncoding=utf-8");
+        System.out.println("Connected to database: " + dbName);
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
         return dataSource;
@@ -37,7 +38,7 @@ public class HibernatePersistenceConfiguration {
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("hibernate.default_schema", "public");
         properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");

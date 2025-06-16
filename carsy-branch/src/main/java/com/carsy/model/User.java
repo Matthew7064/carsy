@@ -62,6 +62,8 @@ public class User {
     @Valid
     private Address address;
 
+    private boolean synchronizedFlag;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,5 +167,13 @@ public class User {
 
     public void setAddress(@Valid Address address) {
         this.address = address;
+    }
+
+    public boolean isSynchronizedFlag() {
+        return synchronizedFlag;
+    }
+
+    public void setSynchronizedFlag(boolean synchronizedFlag) {
+        this.synchronizedFlag = synchronizedFlag;
     }
 }

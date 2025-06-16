@@ -9,4 +9,6 @@ import java.util.UUID;
 
 @Transactional
 @Repository
-public interface BranchRepository extends JpaRepository<Branch, UUID> {}
+public interface BranchRepository extends JpaRepository<Branch, UUID> {
+    Branch findByUrl(String url);
+}

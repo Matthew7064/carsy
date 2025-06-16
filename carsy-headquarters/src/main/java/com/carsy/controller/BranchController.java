@@ -1,11 +1,14 @@
 package com.carsy.controller;
 
 import com.carsy.model.Branch;
+import com.carsy.repository.BranchRepository;
 import com.carsy.service.BranchService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,10 +19,12 @@ import java.util.UUID;
 @RequestMapping("/branches")
 public class BranchController {
     private final BranchService branchService;
+    private final BranchRepository branchRepository;
 
     @Autowired
-    public BranchController(BranchService branchService) {
+    public BranchController(BranchService branchService, BranchRepository branchRepository) {
         this.branchService = branchService;
+        this.branchRepository = branchRepository;
     }
 
     @GetMapping
@@ -59,5 +64,17 @@ public class BranchController {
     public ResponseEntity<Void> removeBranch(@PathVariable("id") UUID id) {
         branchService.removeBranch(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/by-url")
+    public ResponseEntity<UUID> getBranchIdByUrl(HttpServletRequest request) {
+        String url = ServletRequestUtils.getStringParameter(request, "url", "");
+        if (!url.trim().isBlank()) {
+            Branch branch = branchRepository.findByUrl(url);
+            if (branch != null) {
+                return ResponseEntity.ok(branch.getId());
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 }

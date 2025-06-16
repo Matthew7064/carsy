@@ -89,7 +89,8 @@ public class UserServiceImpl implements UserService {
         return user.orElse(null);
     }
 
-    public void syncUsers(List<UserDTO> users) {
+    public List<UUID> syncUsers(List<UserDTO> users) {
+        List<UUID> ids = new ArrayList<>();
         for (UserDTO dto : users) {
             User user = userRepository.findById(dto.id()).orElse(new User());
             user.setId(dto.id());
@@ -100,6 +101,7 @@ public class UserServiceImpl implements UserService {
             user.setPhoneNumber(dto.phoneNumber());
             user.setAccountNumber(dto.accountNumber());
             user.setLogin(dto.login());
+            user.setPassword("password");
 
             Set<Role> roles = new HashSet<>();
             for (String roleName : dto.roles()) {
@@ -130,7 +132,9 @@ public class UserServiceImpl implements UserService {
             if (branch != null) user.getBranches().add(branch);
 
             userRepository.save(user);
+            ids.add(user.getId());
         }
+        return ids;
     }
 
     private void updateRoles(User user, User foundUser) {
