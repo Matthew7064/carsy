@@ -68,7 +68,7 @@
 					>
 						<thead class="border-b border-b-red-500">
 							<tr>
-								<th>Car ID</th>
+								<th>Car Name</th>
 								<th>Rental Start</th>
 								<th>Rental End</th>
 								<th>Paid</th>
@@ -79,9 +79,9 @@
 							<tr v-for="rent in rents" :key="rent.id">
 								<td>
 									<RouterLink
-										:to="`/cars/${rent.id_car}`"
+										:to="`/cars/${rent.id_car.id}`"
 										class="hover:text-red-500 transition-colors"
-										>{{ rent.id_car }}</RouterLink
+										>{{ rent.id_car.brand }} {{ rent.id_car.model }}</RouterLink
 									>
 								</td>
 								<td>

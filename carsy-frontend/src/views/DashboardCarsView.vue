@@ -24,6 +24,7 @@ export default {
     async fetchCars() {
       this.isLoading = true;
       this.cars = await getCars();
+      this.cars.sort((a, b) => a.id_car.localeCompare(b.id_car));
       this.isLoading = false;
     },
     openAddModal() {
@@ -83,13 +84,15 @@ export default {
         }
       }
     },
-    async toggleRentable(id, rentable) {
+    async toggleRentable(id, rentable, car) {
       let newStatus = rentable ? 'IN_SERVICE' : 'AVAILABLE';
-      await updateCarAvailability(id, newStatus);
+      car.carStatus = newStatus;
+      await updateCar(id, car);
       this.fetchCars();
     },
-    async savePrice(id, price) {
-      await updateCarPrice(id, Number(price));
+    async savePrice(id, price, car) {
+      car.price_deposit = Number(price);
+      await updateCar(id, car);
       this.fetchCars();
     },
   },
@@ -109,10 +112,9 @@ export default {
         <table class="table-layout mx-auto my-2 text-sm xl:text-base w-full text-center">
           <thead class="border-b border-b-red-500">
             <tr>
-              <th>Car ID</th>
+              <th>Registration Number</th>
               <th>Brand</th>
               <th>Model</th>
-              <th>Registration Number</th>
               <th>Mileage</th>
               <th>Rentable</th>
               <th>Availability</th>
@@ -125,18 +127,17 @@ export default {
             <tr v-for="car in cars" :key="car.id_car">
               <td>
                 <RouterLink :to="`/cars/${car.id_car}`" class="hover:text-red-500 transition-colors">
-                  {{ car.id_car }}
+                  {{ car.license_plate }}
                 </RouterLink>
               </td>
               <td>{{ car.brand }}</td>
               <td>{{ car.model }}</td>
-              <td>{{ car.license_plate }}</td>
               <td>{{ `${car.mileage} km` }}</td>
               <td :class="{ 'bg-green-600/10 text-green-300': car.rentable, 'bg-red-600/10 text-red-300': !car.rentable }">
                 {{ car.rentable ? 'Yes' : 'No' }}
               </td>
               <td>
-                <button class="hover:text-red-500 transition-colors" @click="toggleRentable(car.id_car, car.rentable)">
+                <button class="hover:text-red-500 transition-colors" @click="toggleRentable(car.id_car, car.rentable, car)">
                   Toggle
                 </button>
               </td>
@@ -144,7 +145,7 @@ export default {
                 <input v-model="car.price_deposit" min="0" type="number" class="bg-zinc-700 px-4 py-2 w-24" />
               </td>
               <td>
-                <button class="hover:text-red-500 transition-colors" @click="savePrice(car.id_car, car.price_deposit)">
+                <button class="hover:text-red-500 transition-colors" @click="savePrice(car.id_car, car.price_deposit, car)">
                   Save
                 </button>
               </td>

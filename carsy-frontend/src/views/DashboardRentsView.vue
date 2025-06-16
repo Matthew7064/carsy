@@ -25,7 +25,7 @@ export default {
       const updatedRent = this.rents.find(rent => rent.id === id);
       const newStatus = status === 'paid' ? 'not_paid' : 'paid';
       updatedRent.status = newStatus;
-      await updateRentStatus(id, newStatus).catch(() => {
+      await updateRentStatus(id, newStatus, updatedRent).catch(() => {
         updatedRent.status = status;
       });
     },
@@ -45,9 +45,8 @@ export default {
 				>
 					<thead class="border-b border-b-red-500">
 						<tr>
-							<th>Rental ID</th>
-							<th>Car ID</th>
-							<th>User ID</th>
+							<th>Car Registration</th>
+							<th>User Name</th>
 							<th>Rental Start</th>
 							<th>Rental End</th>
 							<th>Paid</th>
@@ -57,15 +56,14 @@ export default {
 					</thead>
 					<tbody class="leading-none">
 						<tr v-for="rent in rents" :key="rent.id">
-							<td>{{ rent.id }}</td>
 							<td>
 								<RouterLink
-									:to="`/cars/${rent.id_car}`"
+									:to="`/cars/${rent.id_car.id}`"
 									class="hover:text-red-500 transition-colors"
-									>{{ rent.id_car }}</RouterLink
+									>{{ rent.id_car.registrationNumber }}</RouterLink
 								>
 							</td>
-							<td>{{ rent.id_user }}</td>
+							<td>{{ rent.id_user.name }} {{ rent.id_user.surname }}</td>
 							<td>
 								{{ rent.rent_start.toLocaleString() }}
 							</td>
