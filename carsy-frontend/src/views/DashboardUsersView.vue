@@ -21,8 +21,8 @@ export default {
       this.users = await getUsers();
       this.isLoading = false;
     },
-    async saveRole(id, role) {
-      await updateUserRole(id, role);
+    async saveRole(id, role, user) {
+      await updateUserRole(id, role, user);
     },
   },
 };
@@ -40,14 +40,14 @@ export default {
 				>
 					<thead class="border-b border-b-red-500">
 						<tr>
-							<th>User ID</th>
+							<th>User Name</th>
 							<th>Role</th>
 							<th>Save</th>
 						</tr>
 					</thead>
 					<tbody class="leading-none">
 						<tr v-for="user in users" :key="user.id">
-							<td>{{ user.id }}</td>
+							<td>{{ user.name }} {{user.surname}}</td>
 							<td>
 								<select v-model="user.role" class="bg-zinc-700 px-4 py-2">
 									<option disabled>Select role</option>
@@ -58,7 +58,7 @@ export default {
 							<td>
 								<button
 									class="hover:text-red-500 transition-colors"
-									@click="saveRole(user.id, user.role)"
+									@click="saveRole(user.id, user.role, user)"
 								>
 									Save
 								</button>

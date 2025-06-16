@@ -6,12 +6,12 @@ import { mockAuth } from '../api.js';
 export default {
   components: { RouterLink, ButtonPrimary },
   data() {
-    return { email: '', password: '' };
+    return { email: '', password: '', name: '', surname: '' };
   },
   methods: {
     async createAccount() {
       try {
-        await mockAuth.createUser(this.email, this.password);
+        await mockAuth.createUser(this.email, this.password, this.name, this.surname);
         this.$router.push('/');
       } catch (error) {
         alert(error.message);
@@ -29,6 +29,22 @@ export default {
 			<h1 class="my-6 text-4xl font-semibold text-center md:text-left">
 				Create an account
 			</h1>
+      <label for="name">Name</label>
+      <input
+          id="name"
+          v-model="name"
+          type="text"
+          name="name"
+          class="mt-1 mb-2 px-4 py-2 rounded-md bg-zinc-800 outline-none border border-zinc-600 focus:border-red-500 focus:ring focus:ring-red-500/50 text-lg"
+      />
+      <label for="surname">Surname</label>
+      <input
+          id="surname"
+          v-model="surname"
+          type="text"
+          name="surname"
+          class="mt-1 mb-2 px-4 py-2 rounded-md bg-zinc-800 outline-none border border-zinc-600 focus:border-red-500 focus:ring focus:ring-red-500/50 text-lg"
+      />
 			<label for="email">Login</label>
 			<input
 				id="email"

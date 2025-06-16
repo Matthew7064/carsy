@@ -128,22 +128,22 @@ function convertOrderToBackend(order) {
   };
 }
 
-function convertUserToBackend(user) {
-  const roleId = user.role === 'admin' ? 'uuid-role2' : 'uuid-role1';
-  return {
-    id: user.id,
-    pesel: user.pesel,
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    accountNumber: user.accountNumber,
-    login: user.login,
-    password: user.password,
-    roles: [roleId],
-    address: user.address,
-    branches: user.branches
-  };
+function generateRandomNumber(length) {
+  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
+}
+
+function generateEmail(name, surname) {
+  const domains = ["example.com", "testmail.com", "mailservice.org"];
+  const domain = domains[Math.floor(Math.random() * domains.length)];
+  return `${name.toLowerCase()}.${surname.toLowerCase()}@${domain}`;
+}
+
+function generatePhoneNumber() {
+  return `+48-${generateRandomNumber(3)}-${generateRandomNumber(3)}-${generateRandomNumber(3)}`;
+}
+
+function generateAccountNumber() {
+  return generateRandomNumber(26); // Polish bank account numbers have 26 digits
 }
 
 // Mock Authentication
@@ -167,16 +167,38 @@ export const mockAuth = {
     localStorage.removeItem('currentUserId');
     return Promise.resolve();
   },
-  createUser(login, password) {
-    const backendUser = convertUserToBackend({ email: login, login, password, role: 'user' });
-    return axios.post(`${API_BASE_URL}/users`, backendUser).then(response => {
-      const createdUser = response.data;
-      users[createdUser.id] = createdUser; // Add to local users for signIn consistency
-      const frontendUser = convertUserToFrontend(createdUser);
-      this.currentUser = frontendUser;
-      store.user = frontendUser;
-      localStorage.setItem('currentUserId', createdUser.id);
-      return frontendUser;
+  createUser(login, password, name, surname) {
+    axios.get(`${API_BASE_URL}/roles`).then(response => {
+      const customerRole = response.data.find(customerRole => customerRole.role === "ROLE_CUSTOMER");
+      const newUser =  {
+        pesel: generateRandomNumber(11),
+        name: name,
+        surname: surname,
+        email: generateEmail(name, surname),
+        phoneNumber: generatePhoneNumber(),
+        accountNumber: generateAccountNumber(),
+        login: login,
+        password: password,
+        roles: [customerRole],
+        address: {
+          "street": "ul. Przykładowa",
+          "city": "Warszawa",
+          "postalCode": "00-001",
+          "country": "Polska",
+          "number": "10",
+          "flatNumber": "6"
+        },
+        branches: []
+      };
+      console.log(newUser);
+      return axios.post(`${API_BASE_URL}/users`, newUser).then(response => {
+        const createdUser = response.data;
+        const frontendUser = convertUserToFrontend(createdUser);
+        this.currentUser = frontendUser;
+        store.user = frontendUser;
+        localStorage.setItem('currentUserId', createdUser.id);
+        return frontendUser;
+      });
     });
   }
 };
@@ -283,12 +305,23 @@ export function getUsers() {
   return axios.get(`${API_BASE_URL}/users`).then(response => response.data.map(convertUserToFrontend));
 }
 
-export function updateUserRole(id, roleName) {
-  const roleObj = Object.values(roles).find(r => r.role === roleName);
-  if (!roleObj) {
-    return Promise.reject(new Error('Role not found'));
-  }
-  return axios.patch(`${API_BASE_URL}/users/${id}`, { roles: [roleObj.id] }).then(() => {});
+export function updateUserRole(id, roleName, user) {
+  axios.get(`${API_BASE_URL}/roles`).then(response => {
+    const adminRole = response.data.find(adminRole => adminRole.role === "ROLE_EMPLOYEE");
+    const customerRole = response.data.find(customerRole => customerRole.role === "ROLE_CUSTOMER");
+    axios.get(`${API_BASE_URL}/users/${id}`).then(response => {
+      if(response.data.roles.some(adminRole => adminRole.role === "ROLE_EMPLOYEE") && roleName === "user"){
+        const newUser = response.data;
+        newUser.roles = [customerRole];
+        return axios.put(`${API_BASE_URL}/users/${id}`, newUser).then(() => {});
+      }
+      if(!response.data.roles.some(adminRole => adminRole.role === "ROLE_EMPLOYEE") && roleName === "admin"){
+        const newUser = response.data;
+        newUser.roles = [adminRole];
+        return axios.put(`${API_BASE_URL}/users/${id}`, newUser).then(() => {});
+      }
+    })
+  })
 }
 
 export function assignCarToBranch(carId, branchId) {
@@ -298,12 +331,15 @@ export function assignCarToBranch(carId, branchId) {
 export function getCarLocations(id, since) {
   return axios.get(`${API_BASE_URL}/cars/${id}/locations`, { params: { since } }).then(response => response.data);
 }
-/*
+
 // Initialize current user
 const currentUserId = localStorage.getItem('currentUserId');
 if (currentUserId) {
-  mockAuth.currentUser = convertUserToFrontend(users[currentUserId]);
-  store.user = mockAuth.currentUser;
+  axios.get(`${API_BASE_URL}/users/${currentUserId}`).then(response => {
+    const user = response.data;
+    if (user){
+      mockAuth.currentUser = convertUserToFrontend(user);
+      store.user = mockAuth.currentUser;
+    }
+  });
 }
-
- */
