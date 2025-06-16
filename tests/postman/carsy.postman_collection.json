@@ -32,7 +32,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"number\": \"123A\",\r\n    \"flatNumber\": \"10\",\r\n    \"postalCode\": \"00-001\",\r\n    \"city\": \"Warsaw\",\r\n    \"country\": \"Poland\"\r\n  }\r\n}",
+					"raw": "{\r\n  \"url\": \"http://localhost:8081\",\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"number\": \"123A\",\r\n    \"flatNumber\": \"10\",\r\n    \"postalCode\": \"00-001\",\r\n    \"city\": \"Warsaw\",\r\n    \"country\": \"Poland\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -280,14 +280,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"pesel\": \"23456789012\",\r\n  \"name\": \"Janina\",\r\n  \"surname\": \"Kowalska\",\r\n  \"email\": \"janina.kowalska@example.com\",\r\n  \"phoneNumber\": \"+48-223-456-789\",\r\n  \"accountNumber\": \"23456789012345678901234567\",\r\n  \"login\": \"janka\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"6\"\r\n  },\r\n  \"branches\": []\r\n}\r\n"
+					"raw": "{\r\n  \"pesel\": \"23456789012\",\r\n  \"name\": \"Janina\",\r\n  \"surname\": \"Kowalska\",\r\n  \"email\": \"janina.kowalska@example.com\",\r\n  \"phoneNumber\": \"+48-223-456-789\",\r\n  \"accountNumber\": \"23456789012345678901234567\",\r\n  \"login\": \"janka\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"6\"\r\n  }\r\n}\r\n"
 				},
 				"url": {
-					"raw": "localhost:8080/users",
+					"raw": "localhost:8081/users",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"users"
 					]
