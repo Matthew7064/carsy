@@ -37,14 +37,14 @@ export default {
         vin: "",
         registrationNumber: "",
         carStatus: "AVAILABLE",
-        fuel: "",
-        transmission: "",
+        fuel_type: "PETROL",
+        transmission_type: "MANUAL",
         mileage: 0,
-        horsepower: 0,
+        eng_power: 0,
         registrationDate: new Date().toISOString().split('T')[0],
         insuranceExpiryDate: new Date().toISOString().split('T')[0],
         inspectionExpiryDate: new Date().toISOString().split('T')[0],
-        branch: "uuid-branch1",
+        branch: "",
         locations: []
       };
       this.isEdit = false;

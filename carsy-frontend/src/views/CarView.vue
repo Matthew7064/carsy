@@ -103,7 +103,7 @@ export default {
 				<CarStatItem
 					parameter="Transmission"
 					:value="`${
-						car.transmission_type === 'Manual' ? 'Manual' : 'Automatic'
+						car.transmission_type === 'MANUAL' ? 'Manual' : 'Automatic'
 					}`"
 					><IconTransmission
 				/></CarStatItem>

@@ -28,6 +28,29 @@
           <label class="block text-gray-300">Mileage</label>
           <input v-model="car.mileage" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
         </div>
+        <div>
+          <label class="block text-gray-300">Horsepower</label>
+          <input v-model="car.eng_power" type="number" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required />
+        </div>
+        <div>
+          <label class="block text-gray-300">Fuel</label>
+          <select v-model="car.fuel_type" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required>
+            <option value="PETROL">Petrol</option>
+            <option value="DIESEL">Diesel</option>
+            <option value="LPG">LPG</option>
+            <option value="HYBRID">Hybrid</option>
+            <option value="PLUG_IN_HYBRID">Plug-in Hybrid</option>
+            <option value="ELECTRIC">Electric</option>
+            <option value="HYDROGEN">Hydrogen</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300">Transmission</label>
+          <select v-model="car.transmission_type" class="w-full bg-zinc-700 text-white border border-zinc-600 p-2 rounded" required>
+            <option value="AUTOMATIC">Automatic</option>
+            <option value="MANUAL">Manual</option>
+          </select>
+        </div>
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors">
           {{ isEdit ? "Update Car" : "Add Car" }}
         </button>

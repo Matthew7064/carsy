@@ -8,8 +8,10 @@ import IconEngine from './icons/IconEngine.vue';
 import IconSpeed from './icons/IconSpeed.vue';
 import IconTimer from './icons/IconTimer.vue';
 import IconTransmission from './icons/IconTransmission.vue';
+import IconFuel from "@/components/icons/IconFuel.vue";
 export default {
   components: {
+    IconFuel,
     CarStatItem,
     IconEngine,
     IconTimer,
@@ -53,9 +55,30 @@ export default {
         <CarStatItem
           parameter="Transmission"
           :value="`${
-						car.transmission_type === 'Manual' ? 'Manual' : 'Automatic'
+						car.transmission_type === 'MANUAL' ? 'Manual' : 'Automatic'
 					}`"
         ><IconTransmission
+        /></CarStatItem>
+        <CarStatItem
+            parameter="Fuel"
+            :value="`${
+						car.fuel_type === 'PETROL'
+							? 'Petrol'
+							: car.fuel_type === 'DIESEL'
+							? 'Diesel'
+							: car.fuel_type === 'LPG'
+							? 'LPG'
+							: car.fuel_type === 'HYBRID'
+							? 'Hybrid'
+							: car.fuel_type === 'PLUG_IN_HYBRID'
+							? 'Plug-in Hybrid'
+							: car.fuel_type === 'ELECTRIC'
+							? 'Electric'
+							: car.fuel_type === 'HYDROGEN'
+							? 'Hydrogen'
+							: 'Other'
+					}`"
+        ><IconFuel
         /></CarStatItem>
       </ul>
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">

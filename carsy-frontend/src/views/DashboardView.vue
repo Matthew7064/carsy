@@ -64,6 +64,9 @@ export default {
 			<RouterLink to="/dashboard/users">
 				<DashboardItem text="Users"><IconPerson /></DashboardItem>
 			</RouterLink>
+      <RouterLink to="/dashboard/map">
+        <DashboardItem text="Cars Map"><IconSave /></DashboardItem>
+      </RouterLink>
 		</ul>
 		<RouterView />
 	</main>

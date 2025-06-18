@@ -3,42 +3,6 @@ import axios from "axios";
 
 const API_BASE_URL = 'http://localhost:8080';
 
-let users = {
-  'uuid-user1': {
-    id: 'uuid-user1',
-    pesel: '12345678901',
-    name: 'John',
-    surname: 'Doe',
-    email: 'user@example.com',
-    phoneNumber: '+48-123-456-789',
-    accountNumber: '12345678901234567890123456',
-    login: 'user1',
-    password: 'password',
-    roles: { id: 'uuid-role1', role: 'ROLE_CUSTOMER' },
-    address: 'uuid-address1',
-    branches: []
-  },
-  'uuid-admin1': {
-    id: 'uuid-admin1',
-    pesel: '98765432109',
-    name: 'Admin',
-    surname: 'Admin',
-    email: 'admin@example.com',
-    phoneNumber: '+48-987-654-321',
-    accountNumber: '65432109876543210987654321',
-    login: 'admin1',
-    password: 'adminpass',
-    roles: [{ id: 'uuid-role2', role: 'ROLE_EMPLOYEE' }],
-    address: 'uuid-address2',
-    branches: []
-  }
-};
-
-let roles = {
-  'uuid-role1': { id: 'uuid-role1', role: 'ROLE_CUSTOMER' },
-  'uuid-role2': { id: 'uuid-role2', role: 'ROLE_EMPLOYEE' }
-};
-
 function convertCarToFrontend(car) {
   return {
     id_car: car.id,
@@ -132,12 +96,6 @@ function generateRandomNumber(length) {
   return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
 }
 
-function generateEmail(name, surname) {
-  const domains = ["example.com", "testmail.com", "mailservice.org"];
-  const domain = domains[Math.floor(Math.random() * domains.length)];
-  return `${name.toLowerCase()}.${surname.toLowerCase()}@${domain}`;
-}
-
 function generatePhoneNumber() {
   return `+48-${generateRandomNumber(3)}-${generateRandomNumber(3)}-${generateRandomNumber(3)}`;
 }
@@ -146,7 +104,7 @@ function generateAccountNumber() {
   return generateRandomNumber(26); // Polish bank account numbers have 26 digits
 }
 
-// Mock Authentication
+// Authentication
 export const mockAuth = {
   currentUser: null,
   signIn(login, password) {
@@ -167,14 +125,14 @@ export const mockAuth = {
     localStorage.removeItem('currentUserId');
     return Promise.resolve();
   },
-  createUser(login, password, name, surname) {
+  createUser(login, password, name, surname, email) {
     axios.get(`${API_BASE_URL}/roles`).then(response => {
       const customerRole = response.data.find(customerRole => customerRole.role === "ROLE_CUSTOMER");
       const newUser =  {
         pesel: generateRandomNumber(11),
         name: name,
         surname: surname,
-        email: generateEmail(name, surname),
+        email: email,
         phoneNumber: generatePhoneNumber(),
         accountNumber: generateAccountNumber(),
         login: login,
@@ -247,17 +205,11 @@ function generateVIN() {
 
 export async function addCar(car) {
   const backendCar = convertCarToBackend(car);
-  axios.get(`${API_BASE_URL}/branches`).then((response) => {
-    const branchID = response.data[0].id;
-    console.log(branchID);
-    backendCar.branch = {'id': branchID};
-    backendCar.fuel = "PETROL";
-    backendCar.horsepower = 132;
-    backendCar.vin = generateVIN();
-    backendCar.transmission = "AUTOMATIC";
-    console.log(backendCar)
-    return axios.post(`${API_BASE_URL}/cars`, backendCar).then(() => {});
-  });
+  const response = await axios.get(`${API_BASE_URL}/branches`);
+  const branchID = response.data[0].id;
+  backendCar.branch = { id: branchID };
+  backendCar.vin = generateVIN();
+  return axios.post(`${API_BASE_URL}/cars`, backendCar).then(() => {});
 }
 
 export function updateCar(id, car) {

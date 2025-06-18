@@ -65,6 +65,13 @@ export default {
 				>
 					<IconPerson />
 				</SideBarItem>
+        <SideBarItem
+            v-if="store.user && store.user.role === 'admin'"
+            to="/dashboard/map"
+            tooltip="Map"
+        >
+          <IconSave />
+        </SideBarItem>
 			</div>
 			<div class="mt-auto">
 				<SideBarItem

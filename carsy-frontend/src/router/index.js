@@ -59,6 +59,11 @@ const router = createRouter({
 					name: 'dashboard users',
 					component: () => import('../views/DashboardUsersView.vue'),
 				},
+				{
+					path: 'map',
+					name: 'dashboard map',
+					component: () => import('../views/DashboardMapView.vue'),
+				},
 			],
 		},
 	],
