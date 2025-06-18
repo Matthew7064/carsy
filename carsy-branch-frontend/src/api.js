@@ -1,7 +1,7 @@
 import { store } from './store';
 import axios from "axios";
 
-const API_BASE_URL = 'http://localhost:8081';
+const API_BASE_URL = 'http://localhost:8080';
 
 function convertCarToFrontend(car) {
   return {
@@ -218,6 +218,10 @@ export function updateCar(id, car) {
   return axios.patch(`${API_BASE_URL}/cars/${id}`, backendCar).then(() => {});
 }
 
+export function updateCarStatus(carId, newStatus) {
+    return axios.patch(`${API_BASE_URL}/cars/${carId}`, {id: carId, carStatus: newStatus }).then(() => {});
+}
+
 export function deleteCar(id) {
   return axios.delete(`${API_BASE_URL}/cars/${id}`).then(() => {});
 }
@@ -237,19 +241,27 @@ export function getUserRents(userId) {
   });
 }
 
-export function addRent(orderData) {
+export function addRent(orderData, orderedCar) {
   const backendOrder = convertOrderToBackend(orderData);
   const userID = backendOrder.user;
   const carID = backendOrder.car;
   backendOrder.user = {"id": userID};
   backendOrder.car = {"id": carID};
-  return axios.post(`${API_BASE_URL}/orders`, backendOrder).then(response => response.data.id);
+  const backendCar = convertCarToBackend(orderedCar);
+  backendCar.carStatus = 'RENTED';
+  return axios.post(`${API_BASE_URL}/orders`, backendOrder).then(response => {
+    return axios.patch(`${API_BASE_URL}/cars/${backendCar.id}`, backendCar).then(() => {});
+  });
 }
 
 export function updateRentStatus(id, newStatus, updatedRent) {
   const backendUpdates = {startDate: updatedRent.rent_start instanceof Date ? updatedRent.rent_start.toISOString() : updatedRent.rent_start,
     endDate: updatedRent.rent_end instanceof Date ? updatedRent.rent_end.toISOString() : updatedRent.rent_end, price: updatedRent.total_price, paid: newStatus === 'paid' };
-  return axios.patch(`${API_BASE_URL}/orders/${id}`, backendUpdates).then(() => {});
+  return axios.patch(`${API_BASE_URL}/orders/${id}`, backendUpdates).then((response) => {
+      const backendCar = response.data.car;
+      backendCar.carStatus = updatedRent.id_car.carStatus;
+      return axios.patch(`${API_BASE_URL}/cars/${backendCar.id}`, backendCar).then(() => {});
+  });
 }
 
 // User Functions

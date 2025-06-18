@@ -118,7 +118,7 @@ export default {
         deposit: this.deposit,
         total_price: this.total_price,
         payment_type: this.payment_type,
-      });
+      }, this.car);
       this.$router.push('/account');
     },
   },
