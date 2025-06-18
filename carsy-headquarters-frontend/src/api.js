@@ -75,7 +75,7 @@ function convertCarToBackend(car) {
     registrationDate: car.registrationDate instanceof Date ? car.registrationDate.toISOString().split('T')[0] : car.registrationDate,
     insuranceExpiryDate: car.insuranceExpiryDate instanceof Date ? car.insuranceExpiryDate.toISOString().split('T')[0] : car.insuranceExpiryDate,
     inspectionExpiryDate: car.inspectionExpiryDate instanceof Date ? car.inspectionExpiryDate.toISOString().split('T')[0] : car.inspectionExpiryDate,
-    branch: car.branch,
+    branch: {id: car.branch},
     locations: car.locations
   };
 }
