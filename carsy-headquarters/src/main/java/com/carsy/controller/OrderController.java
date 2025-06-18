@@ -27,6 +27,12 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @PostMapping
+    public ResponseEntity<Order> addOrder(@RequestBody @Valid Order order) {
+        orderService.addOrder(order);
+        return ResponseEntity.ok(order);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") UUID id) {
         Order order = orderService.findOrder(id);

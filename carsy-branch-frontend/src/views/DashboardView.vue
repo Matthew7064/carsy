@@ -55,14 +55,8 @@ export default {
 			<RouterLink to="/dashboard">
 				<DashboardItem text="Dashboard"><IconDashboard /></DashboardItem>
 			</RouterLink>
-			<RouterLink to="/dashboard/cars">
-				<DashboardItem text="Cars"><IconCar /></DashboardItem>
-			</RouterLink>
 			<RouterLink to="/dashboard/rents">
 				<DashboardItem text="Rentals"><IconCarRental /></DashboardItem>
-			</RouterLink>
-			<RouterLink to="/dashboard/users">
-				<DashboardItem text="Users"><IconPerson /></DashboardItem>
 			</RouterLink>
       <RouterLink to="/dashboard/map">
         <DashboardItem text="Cars Map"><IconSave /></DashboardItem>

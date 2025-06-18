@@ -45,19 +45,9 @@ const router = createRouter({
 			component: () => import('../views/DashboardView.vue'),
 			children: [
 				{
-					path: 'cars',
-					name: 'dashboard cars',
-					component: () => import('../views/DashboardCarsView.vue'),
-				},
-				{
 					path: 'rents',
 					name: 'dashboard rents',
 					component: () => import('../views/DashboardRentsView.vue'),
-				},
-				{
-					path: 'users',
-					name: 'dashboard users',
-					component: () => import('../views/DashboardUsersView.vue'),
 				},
 				{
 					path: 'map',

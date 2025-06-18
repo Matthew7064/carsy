@@ -53,14 +53,6 @@ export default {
 			<span class="flex items-center gap-2 mr-8"
 				><IconPhone class="w-6 h-6" />123 456 789</span
 			>
-
-			<RouterLink to="/cars">
-				<button
-					class="btn hidden xl:block mr-8 py-4 px-10 bg-red-500 hover:bg-red-600 shadow-red-500 rounded-full text-white font-semibold tracking-wide transition hover:scale-105"
-				>
-					Rent Now
-				</button>
-			</RouterLink>
 		</div>
 		<button
 			class="block md:hidden mx-4 p-4 shrink-0"

@@ -46,24 +46,10 @@ export default {
 				</SideBarItem>
 				<SideBarItem
 					v-if="store.user && store.user.role === 'admin'"
-					to="/dashboard/cars"
-					tooltip="Cars"
-				>
-					<IconCar />
-				</SideBarItem>
-				<SideBarItem
-					v-if="store.user && store.user.role === 'admin'"
 					to="/dashboard/rents"
 					tooltip="Rentals"
 				>
 					<IconCarRental />
-				</SideBarItem>
-				<SideBarItem
-					v-if="store.user && store.user.role === 'admin'"
-					to="/dashboard/users"
-					tooltip="Users"
-				>
-					<IconPerson />
 				</SideBarItem>
         <SideBarItem
             v-if="store.user && store.user.role === 'admin'"

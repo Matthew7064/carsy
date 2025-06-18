@@ -1,18 +1,14 @@
 <script>
   import { RouterLink } from 'vue-router';
-  import CarImage from '../components/CarImage.vue';
-  import CarMainStatsItem from '../components/CarMainStatsItem.vue';
   import IconEngine from '../components/icons/IconEngine.vue';
   import IconHP from '../components/icons/IconHP.vue';
   import IconSpeed from '../components/icons/IconSpeed.vue';
 
   export default {
-  components: {CarMainStatsItem,
-  IconEngine,
+  components: {IconEngine,
   IconHP,
   IconSpeed,
-  RouterLink,
-  CarImage,},
+  RouterLink},
   computed: {},
   created() {
 },

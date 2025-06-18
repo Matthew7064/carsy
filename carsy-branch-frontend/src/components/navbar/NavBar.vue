@@ -102,14 +102,14 @@ export default {
 						class="flex flex-col items-center justify-center gap-2 mb-4 mt-auto"
 					>
 						<NavItem v-if="!store.user" to="/register" class="p-4"
-							>Zarejestruj się</NavItem
+							>Register</NavItem
 						>
 						<NavItem v-else to="/account" class="p-4">My account</NavItem>
 						<NavItem v-if="!store.user" to="/login" class="p-4"
-							>Zaloguj sie</NavItem
+							>Log in</NavItem
 						>
 						<NavItem v-else class="p-4" @click="signOutUser"
-							>Wyloguj się</NavItem
+							>Log out</NavItem
 						>
 					</ul>
 				</div>
