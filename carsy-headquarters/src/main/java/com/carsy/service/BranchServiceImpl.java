@@ -38,7 +38,7 @@ public class BranchServiceImpl implements BranchService {
             AddressUtils.updateAddress(branch.getAddress(), foundBranch.getAddress());
             updateUsers(branch, foundBranch);
             updateCars(branch, foundBranch);
-            return branchRepository.save(branch);
+            return branchRepository.save(foundBranch);
         }
         return null;
     }
@@ -51,7 +51,7 @@ public class BranchServiceImpl implements BranchService {
             if (branch.getAddress() != null) AddressUtils.updateAddress(branch.getAddress(), foundBranch.getAddress());
             if (branch.getUsers() != null) updateUsers(branch, foundBranch);
             if (branch.getCars() != null) updateCars(branch, foundBranch);
-            return branchRepository.save(branch);
+            return branchRepository.save(foundBranch);
         }
         return null;
     }
