@@ -1,11 +1,136 @@
 {
 	"info": {
-		"_postman_id": "c3db63c2-20c8-4e1f-a263-aa655018f5fa",
+		"_postman_id": "557c391b-9b7f-4b4c-81a9-75fe4fb0fad8",
 		"name": "carsy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20003081"
+		"_exporter_id": "45941161",
+		"_collection_link": "https://marcin-7022031.postman.co/workspace/Marcin's-Workspace~6eafda31-9fe8-49e4-8793-efb343cdc812/collection/45941161-557c391b-9b7f-4b4c-81a9-75fe4fb0fad8?action=share&source=collection_link&creator=45941161"
 	},
 	"item": [
+		{
+			"name": "orders - do zrobienia",
+			"item": [
+				{
+					"name": "Add order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"order1_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-06-30T18:00:00\",\r\n  \"price\": 800.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-06-30T18:00:00\",\r\n  \"price\": 800.00\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Add branch",
 			"event": [
@@ -88,7 +213,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"registrationNumber\": \"ABC12345\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"year\": 2021,\r\n  \"rentalPricePerDay\": 150.00,\r\n  \"value\": 75000.00,\r\n  \"carStatus\": \"AVAILABLE\",\r\n  \"fuel\": \"PETROL\",\r\n  \"transmission\": \"AUTOMATIC\",\r\n  \"mileage\": 45000,\r\n  \"horsepower\": 132,\r\n  \"registrationDate\": \"2022-03-15\",\r\n  \"insuranceExpiryDate\": \"2025-03-15\",\r\n  \"inspectionExpiryDate\": \"2024-09-01\",\r\n  \"branch\": {\r\n    \"id\": \"{{branch1_id}}\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"registrationNumber\": \"ABC12345\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"year\": 2021,\r\n  \"rentalPricePerDay\": 150.00,\r\n  \"value\": 75000.00,\r\n  \"carStatus\": \"AVAILABLE\",\r\n  \"fuel\": \"PETROL\",\r\n  \"transmission\": \"AUTOMATIC\",\r\n  \"mileage\": 45000,\r\n  \"horsepower\": 132,\r\n  \"registrationDate\": \"2022-03-15\",\r\n  \"insuranceExpiryDate\": \"2025-03-15\",\r\n  \"inspectionExpiryDate\": \"2024-09-01\",\r\n  \"branch\": {\r\n    \"id\": \"{{branch1_id}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/cars",
@@ -350,24 +480,6 @@
 			"response": []
 		},
 		{
-			"name": "Get orders",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/orders",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Get users",
 			"request": {
 				"method": "GET",
@@ -398,6 +510,196 @@
 					"port": "8080",
 					"path": [
 						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete branch",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/branches",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete location",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/locations",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"locations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete employee",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete customer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/roles/{{role_customer_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"roles",
+						"{{role_customer_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete role employee",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/roles/{{role_employee_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"roles",
+						"{{role_employee_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete role customer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/roles/{{role_customer_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"roles",
+						"{{role_customer_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put branch",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/branches/{{branch1_id}}\n",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches",
+						"{{branch1_id}}\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "Put car",
+					"host": [
+						"Put car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put employee",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "Put branch",
+					"host": [
+						"Put branch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "Put branch",
+					"host": [
+						"Put branch"
 					]
 				}
 			},
