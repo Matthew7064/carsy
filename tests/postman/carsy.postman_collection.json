@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "557c391b-9b7f-4b4c-81a9-75fe4fb0fad8",
+		"_postman_id": "ee1fa356-c500-448f-a7e4-2dc8fe406273",
 		"name": "carsy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "45941161",
-		"_collection_link": "https://marcin-7022031.postman.co/workspace/Marcin's-Workspace~6eafda31-9fe8-49e4-8793-efb343cdc812/collection/45941161-557c391b-9b7f-4b4c-81a9-75fe4fb0fad8?action=share&source=collection_link&creator=45941161"
+		"_exporter_id": "20003081"
 	},
 	"item": [
 		{
@@ -132,76 +131,258 @@
 			]
 		},
 		{
-			"name": "Add branch",
-			"event": [
+			"name": "From registering the company to creating first order",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"pm.environment.set(\"branch1_id\", response.id);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"url\": \"http://localhost:8081\",\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"number\": \"123A\",\r\n    \"flatNumber\": \"10\",\r\n    \"postalCode\": \"00-001\",\r\n    \"city\": \"Warsaw\",\r\n    \"country\": \"Poland\"\r\n  }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Headquarters - add branch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"branch1_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/branches",
-					"host": [
-						"localhost"
 					],
-					"port": "8080",
-					"path": [
-						"branches"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"url\": \"http://localhost:8081\",\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"number\": \"123A\",\r\n    \"flatNumber\": \"10\",\r\n    \"postalCode\": \"00-001\",\r\n    \"city\": \"Warsaw\",\r\n    \"country\": \"Poland\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/branches",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"branches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Headquarters - add car",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"car1_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"registrationNumber\": \"ABC12345\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"year\": 2021,\r\n  \"rentalPricePerDay\": 150.00,\r\n  \"value\": 75000.00,\r\n  \"carStatus\": \"AVAILABLE\",\r\n  \"fuel\": \"PETROL\",\r\n  \"transmission\": \"AUTOMATIC\",\r\n  \"mileage\": 45000,\r\n  \"horsepower\": 132,\r\n  \"registrationDate\": \"2022-03-15\",\r\n  \"insuranceExpiryDate\": \"2025-03-15\",\r\n  \"inspectionExpiryDate\": \"2024-09-01\",\r\n  \"branch\": {\r\n    \"id\": \"{{branch1_id}}\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cars",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - register car in Branch1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": \"{{car1_id}}\",\r\n    \"vin\": \"1HGCM82633A123456\",\r\n    \"registrationNumber\": \"ABC12345\",\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla\",\r\n    \"year\": 2021,\r\n    \"rentalPricePerDay\": 150.00,\r\n    \"value\": 75000.00,\r\n    \"carStatus\": \"AVAILABLE\",\r\n    \"fuel\": \"PETROL\",\r\n    \"transmission\": \"AUTOMATIC\",\r\n    \"mileage\": 45000,\r\n    \"horsepower\": 132,\r\n    \"registrationDate\": \"2022-03-15\",\r\n    \"insuranceExpiryDate\": \"2025-03-15\",\r\n    \"inspectionExpiryDate\": \"2024-09-01\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/sync/cars",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"sync",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - add role customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"branch1_role_customer_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"ROLE_CUSTOMER\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8081/roles",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - add customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"branch1_customer1_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"pesel\": \"23456789012\",\r\n  \"name\": \"Janina\",\r\n  \"surname\": \"Kowalska\",\r\n  \"email\": \"janina.kowalska@example.com\",\r\n  \"phoneNumber\": \"+48-223-456-789\",\r\n  \"accountNumber\": \"23456789012345678901234567\",\r\n  \"login\": \"janka\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{branch1_role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"6\"\r\n  }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8081/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - add order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"branch1_order1_id\", response.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{branch1_customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-06-30T18:00:00\",\r\n  \"price\": 800.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Add car",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"pm.environment.set(\"car1_id\", response.id);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
+			"name": "Branch1 - add location",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -213,47 +394,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"registrationNumber\": \"ABC12345\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"year\": 2021,\r\n  \"rentalPricePerDay\": 150.00,\r\n  \"value\": 75000.00,\r\n  \"carStatus\": \"AVAILABLE\",\r\n  \"fuel\": \"PETROL\",\r\n  \"transmission\": \"AUTOMATIC\",\r\n  \"mileage\": 45000,\r\n  \"horsepower\": 132,\r\n  \"registrationDate\": \"2022-03-15\",\r\n  \"insuranceExpiryDate\": \"2025-03-15\",\r\n  \"inspectionExpiryDate\": \"2024-09-01\",\r\n  \"branch\": {\r\n    \"id\": \"{{branch1_id}}\"\r\n  }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\r\n  \"latitude\": 52.2297,\r\n  \"longitude\": 21.0122,\r\n  \"time\": \"2025-05-19T14:30:00\",\r\n  \"car\": {\r\n    \"id\": \"{{branch1_car1_id}}\"\r\n  }\r\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/cars",
+					"raw": "localhost:8081/locations",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
-					"path": [
-						"cars"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add location",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"latitude\": 52.2297,\r\n  \"longitude\": 21.0122,\r\n  \"time\": \"2025-05-19T14:30:00\",\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  }\r\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/locations",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"locations"
 					]
@@ -262,14 +410,14 @@
 			"response": []
 		},
 		{
-			"name": "Add role employee",
+			"name": "Branch1 - add role employee",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"const response = pm.response.json();\r",
-							"pm.environment.set(\"role_employee_id\", response.id);"
+							"pm.environment.set(\"branch1_role_employee_id\", response.id);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -290,11 +438,11 @@
 					"raw": "{\r\n  \"role\": \"ROLE_EMPLOYEE\"\r\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/roles",
+					"raw": "localhost:8081/roles",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"roles"
 					]
@@ -303,14 +451,14 @@
 			"response": []
 		},
 		{
-			"name": "Add role customer",
+			"name": "Branch1 - add employee",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"const response = pm.response.json();\r",
-							"pm.environment.set(\"role_customer_id\", response.id);"
+							"pm.environment.set(\"branch1_employee1_id\", response.id);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -328,89 +476,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"role\": \"ROLE_CUSTOMER\"\r\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/roles",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add employee",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"pm.environment.set(\"employee_id\", response.id);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"pesel\": \"12345678901\",\r\n  \"name\": \"Jan\",\r\n  \"surname\": \"Kowalski\",\r\n  \"email\": \"jan.kowalski@example.com\",\r\n  \"phoneNumber\": \"+48-123-456-789\",\r\n  \"accountNumber\": \"12345678901234567890123456\",\r\n  \"login\": \"janek\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{role_employee_id}}\"\r\n    },\r\n    {\r\n      \"id\": \"{{role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"5\"\r\n  },\r\n  \"branches\": [\r\n    {\r\n        \"id\": \"{{branch1_id}}\"\r\n    }\r\n  ]\r\n}\r\n"
-				},
-				"url": {
-					"raw": "localhost:8080/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add customer",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const response = pm.response.json();\r",
-							"pm.environment.set(\"customer1_id\", response.id);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"pesel\": \"23456789012\",\r\n  \"name\": \"Janina\",\r\n  \"surname\": \"Kowalska\",\r\n  \"email\": \"janina.kowalska@example.com\",\r\n  \"phoneNumber\": \"+48-223-456-789\",\r\n  \"accountNumber\": \"23456789012345678901234567\",\r\n  \"login\": \"janka\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"6\"\r\n  }\r\n}\r\n"
+					"raw": "{\r\n  \"pesel\": \"12345678901\",\r\n  \"name\": \"Jan\",\r\n  \"surname\": \"Kowalski\",\r\n  \"email\": \"jan.kowalski@example.com\",\r\n  \"phoneNumber\": \"+48-123-456-789\",\r\n  \"accountNumber\": \"12345678901234567890123456\",\r\n  \"login\": \"janek\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{branch1_role_employee_id}}\"\r\n    },\r\n    {\r\n      \"id\": \"{{branch1_role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"5\"\r\n  },\r\n  \"branches\": [\r\n    {\r\n        \"id\": \"{{branch1_id}}\"\r\n    }\r\n  ]\r\n}\r\n"
 				},
 				"url": {
 					"raw": "localhost:8081/users",
@@ -426,7 +492,7 @@
 			"response": []
 		},
 		{
-			"name": "Get branches",
+			"name": "Headquarters - get branches",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -444,7 +510,7 @@
 			"response": []
 		},
 		{
-			"name": "Get cars",
+			"name": "Headquarters - get cars",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -462,7 +528,7 @@
 			"response": []
 		},
 		{
-			"name": "Get locations",
+			"name": "Headquarters - get locations",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -480,7 +546,7 @@
 			"response": []
 		},
 		{
-			"name": "Get users",
+			"name": "Headquarters - get users",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -498,7 +564,7 @@
 			"response": []
 		},
 		{
-			"name": "Get roles",
+			"name": "Headquarters - get roles",
 			"request": {
 				"method": "GET",
 				"header": [],
