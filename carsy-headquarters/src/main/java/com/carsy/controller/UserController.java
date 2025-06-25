@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody @Valid User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") UUID id, @RequestBody User user) {
         User updatedUser = userService.updateUser(user, id);
         if (updatedUser != null) return ResponseEntity.ok(updatedUser);
         return ResponseEntity.notFound().build();

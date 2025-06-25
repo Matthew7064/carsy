@@ -1,6 +1,7 @@
 package com.carsy.service;
 
 import com.carsy.dto.OrderDTO;
+import com.carsy.exception.InvalidDataException;
 import com.carsy.model.Order;
 import com.carsy.model.User;
 import com.carsy.model.car.Car;
@@ -10,6 +11,7 @@ import com.carsy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,9 +57,32 @@ public class OrderServiceImpl implements OrderService {
             if (order.getCar() != null) updateCar(order, foundOrder);
             if (order.getUser() != null) updateUser(order, foundOrder);
             foundOrder.setPaid(order.isPaid());
-            if (order.getStartDate() != null) foundOrder.setStartDate(order.getStartDate());
-            if (order.getEndDate() != null) foundOrder.setEndDate(order.getEndDate());
-            if (order.getPrice() != null) foundOrder.setPrice(order.getPrice());
+            if (order.getStartDate() != null && order.getEndDate() != null) {
+                if (order.getStartDate().isAfter(order.getEndDate())) {
+                    throw new InvalidDataException("Start date must not be after end date.");
+                }
+                foundOrder.setStartDate(order.getStartDate());
+                foundOrder.setEndDate(order.getEndDate());
+            } else {
+                if (order.getStartDate() != null) {
+                    if (order.getStartDate().isAfter(foundOrder.getEndDate())) {
+                        throw new InvalidDataException("Start date must not be after end date.");
+                    }
+                    foundOrder.setStartDate(order.getStartDate());
+                }
+                if (order.getEndDate() != null) {
+                    if (order.getEndDate().isBefore(foundOrder.getStartDate())) {
+                        throw new InvalidDataException("End date must not be before start date.");
+                    }
+                    foundOrder.setEndDate(order.getEndDate());
+                }
+            }
+            if (order.getPrice() != null) {
+                if (order.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new InvalidDataException("Price must be positive.");
+                }
+                foundOrder.setPrice(order.getPrice());
+            }
             return orderRepository.save(foundOrder);
         }
         return null;

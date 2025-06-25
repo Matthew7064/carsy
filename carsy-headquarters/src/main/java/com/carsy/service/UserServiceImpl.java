@@ -2,6 +2,7 @@ package com.carsy.service;
 
 import com.carsy.dto.AddressDTO;
 import com.carsy.dto.UserDTO;
+import com.carsy.exception.InvalidDataException;
 import com.carsy.model.Address;
 import com.carsy.model.Branch;
 import com.carsy.model.Role;
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
             foundUser.setPassword(user.getPassword());
             updateRoles(user, foundUser);
             updateBranches(user, foundUser);
-            AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
+            AddressUtils.editAddress(user.getAddress(), foundUser.getAddress());
             return userRepository.save(foundUser);
         }
         return null;
@@ -57,17 +58,53 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user, UUID id) {
         User foundUser = userRepository.findById(id).orElse(null);
         if (foundUser != null) {
-            if (user.getPesel() != null) foundUser.setPesel(user.getPesel());
-            if (user.getName() != null) foundUser.setName(user.getName());
-            if (user.getSurname() != null) foundUser.setSurname(user.getSurname());
-            if (user.getEmail() != null) foundUser.setEmail(user.getEmail());
-            if (user.getPhoneNumber() != null) foundUser.setPhoneNumber(user.getPhoneNumber());
-            if (user.getAccountNumber() != null) foundUser.setAccountNumber(user.getAccountNumber());
-            if (user.getLogin() != null) foundUser.setLogin(user.getLogin());
-            if (user.getPassword() != null) foundUser.setPassword(user.getPassword());
+            if (user.getPesel() != null && !user.getPesel().isBlank()) foundUser.setPesel(user.getPesel());
+            if (user.getName() != null && !user.getName().isBlank()) foundUser.setName(user.getName());
+            if (user.getSurname() != null && !user.getSurname().isBlank()) foundUser.setSurname(user.getSurname());
+            if (user.getEmail() != null && !user.getEmail().isBlank()) {
+                String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+                if (!user.getEmail().matches(emailRegex)) {
+                    throw new InvalidDataException("Invalid email format.");
+                }
+                User existingUser = userRepository.findByEmail(user.getEmail());
+                if (existingUser != null && !existingUser.getId().equals(id)) {
+                    throw new InvalidDataException("Email already exists.");
+                }
+                foundUser.setEmail(user.getEmail());
+            }
+            if (user.getPhoneNumber() != null && !user.getPhoneNumber().isBlank()) {
+                String phoneNumberRegex = "\\+\\d{2}-\\d{3}-\\d{3}-\\d{3}";
+                if (!user.getPhoneNumber().matches(phoneNumberRegex)) {
+                    throw new InvalidDataException("Invalid phone number format.");
+                }
+                User existingUser = userRepository.findByPhoneNumber(user.getPhoneNumber());
+                if (existingUser != null && !existingUser.getId().equals(id)) {
+                    throw new InvalidDataException("Phone number already exists.");
+                }
+                foundUser.setPhoneNumber(user.getPhoneNumber());
+            }
+            if (user.getAccountNumber() != null && !user.getAccountNumber().isBlank()) {
+                String accountNumberRegex = "\\d{26}";
+                if (!user.getAccountNumber().matches(accountNumberRegex)) {
+                    throw new InvalidDataException("Invalid account number format.");
+                }
+                User existingUser = userRepository.findByAccountNumber(user.getAccountNumber());
+                if (existingUser != null && !existingUser.getId().equals(id)) {
+                    throw new InvalidDataException("Account number already exists.");
+                }
+                foundUser.setAccountNumber(user.getAccountNumber());
+            }
+            if (user.getLogin() != null && !user.getLogin().isBlank()) {
+                User existingUser = userRepository.findByLogin(user.getLogin());
+                if (existingUser != null && !existingUser.getId().equals(id)) {
+                    throw new InvalidDataException("Login already exists.");
+                }
+                foundUser.setLogin(user.getLogin());
+            }
+            if (user.getPassword() != null && !user.getPassword().isBlank()) foundUser.setPassword(user.getPassword());
             if (user.getRoles() != null) updateRoles(user, foundUser);
-            if (user.getBranches() != null) updateBranches(user, foundUser);
             if (user.getAddress() != null) AddressUtils.updateAddress(user.getAddress(), foundUser.getAddress());
+            if (user.getBranches() != null) updateBranches(user, foundUser);
             return userRepository.save(foundUser);
         }
         return null;

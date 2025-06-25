@@ -1,6 +1,7 @@
 package com.carsy.service;
 
 import com.carsy.dto.CarDTO;
+import com.carsy.exception.InvalidDataException;
 import com.carsy.model.Location;
 import com.carsy.model.car.Car;
 import com.carsy.repository.CarRepository;
@@ -30,7 +31,12 @@ public class CarServiceImpl implements CarService {
         Car foundCar = carRepository.findById(id).orElse(null);
         if (foundCar != null) {
             if (car.getCarStatus() != null) foundCar.setCarStatus(car.getCarStatus());
-            if (car.getMileage() > 0) foundCar.setMileage(car.getMileage());
+            if (car.getMileage() > 0) {
+                if (car.getMileage() < foundCar.getMileage()) {
+                    throw new InvalidDataException("Mileage cannot be smaller than already registered");
+                }
+                foundCar.setMileage(car.getMileage());
+            }
             if (car.getLocations() != null) updateLocations(car, foundCar);
             foundCar.setSynchronizedFlag(false);
             return carRepository.save(foundCar);

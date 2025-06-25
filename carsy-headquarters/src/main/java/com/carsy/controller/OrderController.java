@@ -42,7 +42,7 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable("id") UUID id, @RequestBody @Valid Order order) {
+    public ResponseEntity<Order> updateOrder(@PathVariable("id") UUID id, @RequestBody Order order) {
         Order updatedOrder = orderService.updateOrder(order, id);
         if (updatedOrder != null) return ResponseEntity.ok(updatedOrder);
         return ResponseEntity.notFound().build();

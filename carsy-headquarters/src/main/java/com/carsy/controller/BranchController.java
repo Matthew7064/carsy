@@ -54,7 +54,7 @@ public class BranchController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Branch> updateBranch(@PathVariable("id") UUID id, @RequestBody @Valid Branch branch) {
+    public ResponseEntity<Branch> updateBranch(@PathVariable("id") UUID id, @RequestBody Branch branch) {
         Branch updatedBranch = branchService.updateBranch(branch, id);
         if (updatedBranch != null) return ResponseEntity.ok(updatedBranch);
         return ResponseEntity.notFound().build();

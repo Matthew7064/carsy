@@ -13,4 +13,8 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> findByRoles_Id(UUID id);
     List<User> findAllBySynchronizedFlag(boolean isSynchronized);
+    User findByEmail(String email);
+    User findByPhoneNumber(String phoneNumber);
+    User findByAccountNumber(String accountNumber);
+    User findByLogin(String login);
 }

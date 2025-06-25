@@ -1,6 +1,7 @@
 package com.carsy.service;
 
 import com.carsy.dto.CarDTO;
+import com.carsy.exception.InvalidDataException;
 import com.carsy.model.Branch;
 import com.carsy.model.Location;
 import com.carsy.model.car.Car;
@@ -10,6 +11,7 @@ import com.carsy.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,17 +66,44 @@ public class CarServiceImpl implements CarService {
     public Car updateCar(Car car, UUID id) {
         Car foundCar = carRepository.findById(id).orElse(null);
         if (foundCar != null) {
-            if (car.getVin() != null) foundCar.setVin(car.getVin());
-            if (car.getRegistrationNumber() != null) foundCar.setRegistrationNumber(car.getRegistrationNumber());
-            if (car.getBrand() != null) foundCar.setBrand(car.getBrand());
-            if (car.getModel() != null) foundCar.setModel(car.getModel());
+            if (car.getVin() != null && !car.getVin().isBlank()) {
+                Car existingCar = carRepository.findByVin(car.getVin());
+                if (existingCar != null && !existingCar.getId().equals(id)) {
+                    throw new InvalidDataException("Vin number already exists.");
+                }
+                foundCar.setVin(car.getVin());
+            }
+            if (car.getRegistrationNumber() != null && !car.getRegistrationNumber().isBlank()) {
+                Car existingCar = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
+                if (existingCar != null && !existingCar.getId().equals(id)) {
+                    throw new InvalidDataException("Registration number already exists.");
+                }
+                foundCar.setRegistrationNumber(car.getRegistrationNumber());
+            }
+            if (car.getBrand() != null && !car.getBrand().isBlank()) foundCar.setBrand(car.getBrand());
+            if (car.getModel() != null && !car.getModel().isBlank()) foundCar.setModel(car.getModel());
             if (car.getYear() > 0) foundCar.setYear(car.getYear());
-            if (car.getRentalPricePerDay() != null) foundCar.setRentalPricePerDay(car.getRentalPricePerDay());
-            if (car.getValue() != null) foundCar.setValue(car.getValue());
+            if (car.getRentalPricePerDay() != null) {
+                if (car.getRentalPricePerDay().compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new InvalidDataException("Price must be positive.");
+                }
+                foundCar.setRentalPricePerDay(car.getRentalPricePerDay());
+            }
+            if (car.getValue() != null) {
+                if (car.getValue().compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new InvalidDataException("Value must be positive.");
+                }
+                foundCar.setValue(car.getValue());
+            }
             if (car.getCarStatus() != null) foundCar.setCarStatus(car.getCarStatus());
             if (car.getFuel() != null) foundCar.setFuel(car.getFuel());
             if (car.getTransmission() != null) foundCar.setTransmission(car.getTransmission());
-            if (car.getMileage() > 0) foundCar.setMileage(car.getMileage());
+            if (car.getMileage() > 0) {
+                if (car.getMileage() < foundCar.getMileage()) {
+                    throw new InvalidDataException("Mileage cannot be smaller than already registered");
+                }
+                foundCar.setMileage(car.getMileage());
+            }
             if (car.getHorsepower() > 0) foundCar.setHorsepower(car.getHorsepower());
             if (car.getRegistrationDate() != null) foundCar.setRegistrationDate(car.getRegistrationDate());
             if (car.getInsuranceExpiryDate() != null) foundCar.setInsuranceExpiryDate(car.getInsuranceExpiryDate());

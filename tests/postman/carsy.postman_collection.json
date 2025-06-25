@@ -7,130 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "orders - do zrobienia",
-			"item": [
-				{
-					"name": "Add order",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json();\r",
-									"pm.environment.set(\"order1_id\", response.id);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-06-30T18:00:00\",\r\n  \"price\": 800.00\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8081/orders",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get orders",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-06-30T18:00:00\",\r\n  \"price\": 800.00\r\n}"
-						},
-						"url": {
-							"raw": "localhost:8081/orders",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete order",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8081/orders",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Put order",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "localhost:8081/orders",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch order",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "localhost:8081/orders",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "From registering the company to creating first order",
 			"item": [
 				{
@@ -378,6 +254,92 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Branch1 - get orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - put order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  },\r\n  \"user\": {\r\n    \"id\": \"{{branch1_customer1_id}}\"\r\n  },\r\n  \"startDate\": \"2025-06-25T10:00:00\",\r\n  \"endDate\": \"2025-07-01T18:00:00\",\r\n  \"price\": 800.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/orders/{{branch1_order1_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders",
+								"{{branch1_order1_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch1 - patch order",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"price\": 900.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/orders/{{branch1_order1_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"orders",
+								"{{branch1_order1_id}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -394,7 +356,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"latitude\": 52.2297,\r\n  \"longitude\": 21.0122,\r\n  \"time\": \"2025-05-19T14:30:00\",\r\n  \"car\": {\r\n    \"id\": \"{{branch1_car1_id}}\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"latitude\": 52.2297,\r\n  \"longitude\": 21.0122,\r\n  \"time\": \"2025-05-19T14:30:00\",\r\n  \"car\": {\r\n    \"id\": \"{{car1_id}}\"\r\n  }\r\n}"
 				},
 				"url": {
 					"raw": "localhost:8081/locations",
@@ -476,7 +438,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"pesel\": \"12345678901\",\r\n  \"name\": \"Jan\",\r\n  \"surname\": \"Kowalski\",\r\n  \"email\": \"jan.kowalski@example.com\",\r\n  \"phoneNumber\": \"+48-123-456-789\",\r\n  \"accountNumber\": \"12345678901234567890123456\",\r\n  \"login\": \"janek\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{branch1_role_employee_id}}\"\r\n    },\r\n    {\r\n      \"id\": \"{{branch1_role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"5\"\r\n  },\r\n  \"branches\": [\r\n    {\r\n        \"id\": \"{{branch1_id}}\"\r\n    }\r\n  ]\r\n}\r\n"
+					"raw": "{\r\n  \"pesel\": \"12345678901\",\r\n  \"name\": \"Jan\",\r\n  \"surname\": \"Kowalski\",\r\n  \"email\": \"jan.kowalski@example.com\",\r\n  \"phoneNumber\": \"+48-123-456-789\",\r\n  \"accountNumber\": \"12345678901234567890123456\",\r\n  \"login\": \"janek\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{branch1_role_employee_id}}\"\r\n    },\r\n    {\r\n      \"id\": \"{{branch1_role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"5\"\r\n  }\r\n}\r\n"
 				},
 				"url": {
 					"raw": "localhost:8081/users",
@@ -582,190 +544,262 @@
 			"response": []
 		},
 		{
-			"name": "Delete branch",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/branches",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"branches"
-					]
+			"name": "Headquarters - put branch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete car",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/cars",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"cars"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete location",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/locations",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"locations"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete employee",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete customer",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/roles/{{role_customer_id}}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"roles",
-						"{{role_customer_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete role employee",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/roles/{{role_employee_id}}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"roles",
-						"{{role_employee_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete role customer",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/roles/{{role_customer_id}}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"roles",
-						"{{role_customer_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Put branch",
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"url\": \"http://localhost:8081\",\r\n  \"address\": {\r\n    \"street\": \"Main Street\",\r\n    \"number\": \"123A\",\r\n    \"flatNumber\": \"10\",\r\n    \"postalCode\": \"01-001\",\r\n    \"city\": \"Warsaw\",\r\n    \"country\": \"Poland\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/branches/{{branch1_id}}\n",
+					"raw": "localhost:8080/branches/{{branch1_id}}",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"branches",
-						"{{branch1_id}}\n"
+						"{{branch1_id}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Put car",
+			"name": "Headquarters - patch branch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": {\r\n    \"street\": \"Updated Street\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "Put car",
+					"raw": "localhost:8080/branches/{{branch1_id}}",
 					"host": [
-						"Put car"
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"branches",
+						"{{branch1_id}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Put employee",
+			"name": "Headquarters - put car",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"vin\": \"1HGCM82633A123456\",\r\n  \"registrationNumber\": \"ABC12345\",\r\n  \"brand\": \"Toyota\",\r\n  \"model\": \"Corolla\",\r\n  \"year\": 2021,\r\n  \"rentalPricePerDay\": 150.00,\r\n  \"value\": 75000.00,\r\n  \"carStatus\": \"AVAILABLE\",\r\n  \"fuel\": \"PETROL\",\r\n  \"transmission\": \"AUTOMATIC\",\r\n  \"mileage\": 45000,\r\n  \"horsepower\": 132,\r\n  \"registrationDate\": \"2022-03-15\",\r\n  \"insuranceExpiryDate\": \"2026-03-15\",\r\n  \"inspectionExpiryDate\": \"2025-09-01\",\r\n  \"branch\": {\r\n    \"id\": \"{{branch1_id}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "Put branch",
+					"raw": "localhost:8080/cars/{{car1_id}}",
 					"host": [
-						"Put branch"
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"{{car1_id}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Put customer",
+			"name": "Headquarters - patch car",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"value\": 60000.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cars/{{car1_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cars",
+						"{{car1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Branch1 - put employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pesel\": \"12345678901\",\r\n  \"name\": \"Jan\",\r\n  \"surname\": \"Kowalski\",\r\n  \"email\": \"jan.kowalski@example.com\",\r\n  \"phoneNumber\": \"+48-234-567-891\",\r\n  \"accountNumber\": \"12345678901234567890123456\",\r\n  \"login\": \"janek\",\r\n  \"password\": \"password\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": \"{{branch1_role_employee_id}}\"\r\n    },\r\n    {\r\n      \"id\": \"{{branch1_role_customer_id}}\"\r\n    }\r\n  ],\r\n  \"address\": {\r\n    \"street\": \"ul. Przykładowa\",\r\n    \"city\": \"Warszawa\",\r\n    \"postalCode\": \"00-001\",\r\n    \"country\": \"Polska\",\r\n    \"number\": \"10\",\r\n    \"flatNumber\": \"5\"\r\n  }\r\n}\r\n"
+				},
 				"url": {
-					"raw": "Put branch",
+					"raw": "localhost:8081/users/{{branch1_employee1_id}}",
 					"host": [
-						"Put branch"
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users",
+						"{{branch1_employee1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Branch1 - patch employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"jan.kowalski@2nd-example.com\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:8081/users/{{branch1_employee1_id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"users",
+						"{{branch1_employee1_id}}"
 					]
 				}
 			},

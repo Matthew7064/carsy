@@ -9,4 +9,9 @@ import java.util.UUID;
 
 @Transactional
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {}
+public interface UserRepository extends JpaRepository<User, UUID> {
+    User findByEmail(String email);
+    User findByPhoneNumber(String phoneNumber);
+    User findByAccountNumber(String accountNumber);
+    User findByLogin(String login);
+}

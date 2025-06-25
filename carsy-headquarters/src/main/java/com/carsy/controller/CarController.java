@@ -52,7 +52,7 @@ public class CarController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable ("id") UUID id, @RequestBody @Valid Car car) {
+    public ResponseEntity<Car> updateCar(@PathVariable ("id") UUID id, @RequestBody Car car) {
         Car updatedCar = carService.updateCar(car, id);
         if (updatedCar != null) return ResponseEntity.ok(updatedCar);
         return ResponseEntity.notFound().build();

@@ -9,4 +9,7 @@ import java.util.UUID;
 
 @Transactional
 @Repository
-public interface CarRepository extends JpaRepository<Car, UUID> {}
+public interface CarRepository extends JpaRepository<Car, UUID> {
+    Car findByVin(String vin);
+    Car findByRegistrationNumber(String registrationNumber);
+}
