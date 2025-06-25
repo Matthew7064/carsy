@@ -100,7 +100,7 @@
 					"response": []
 				},
 				{
-					"name": "Branch1 - register car in Branch1",
+					"name": "Headquarters - register car in Branch1",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -112,7 +112,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n  {\r\n    \"id\": \"{{car1_id}}\",\r\n    \"vin\": \"1HGCM82633A123456\",\r\n    \"registrationNumber\": \"ABC12345\",\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla\",\r\n    \"year\": 2021,\r\n    \"rentalPricePerDay\": 150.00,\r\n    \"value\": 75000.00,\r\n    \"carStatus\": \"AVAILABLE\",\r\n    \"fuel\": \"PETROL\",\r\n    \"transmission\": \"AUTOMATIC\",\r\n    \"mileage\": 45000,\r\n    \"horsepower\": 132,\r\n    \"registrationDate\": \"2022-03-15\",\r\n    \"insuranceExpiryDate\": \"2025-03-15\",\r\n    \"inspectionExpiryDate\": \"2024-09-01\"\r\n  }\r\n]",
+							"raw": "[\r\n  \"{{car1_id}}\"\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,14 +120,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8081/sync/cars",
+							"raw": "localhost:8080/sync/cars/register-in-branch/{{branch1_id}}",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"sync",
-								"cars"
+								"cars",
+								"register-in-branch",
+								"{{branch1_id}}"
 							]
 						}
 					},

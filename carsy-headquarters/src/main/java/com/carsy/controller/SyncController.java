@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -138,6 +139,32 @@ public class SyncController {
             car.setBranch(branch);
             carRepository.save(car);
             return ResponseEntity.ok(syncService.buildCarDTO(car));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/cars/register-in-branch/{branchId}")
+    public ResponseEntity<Void> registerCarInBranch(@PathVariable("branchId") UUID branchId,
+                                                          @RequestBody List<UUID> carIds) {
+        Branch branch = branchRepository.findById(branchId).orElse(null);
+        if (branch != null) {
+            String url = branch.getUrl();
+            List<CarDTO> cars = new ArrayList<>();
+            for (UUID id : carIds) {
+                Car car = carRepository.findById(id).orElse(null);
+                if (car != null) {
+                    cars.add(syncService.buildCarDTO(car));
+                }
+            }
+            WebClient.create().post()
+                    .uri(url + "/sync/cars")
+                    .bodyValue(cars)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .doOnSuccess(response -> System.out.println("Cars registered in branch with id: " + branchId))
+                    .doOnError(error -> System.err.println("Error while registering cars in branch with id: " + branchId + ", error: " + error.getMessage()))
+                    .subscribe();
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
