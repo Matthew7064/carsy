@@ -31,7 +31,7 @@ public class HibernatePersistenceConfiguration {
         dataSource.setUrl("jdbc:postgresql://localhost:5432/" + dbName + "?characterEncoding=utf-8");
         System.out.println("Connected to database: " + dbName);
         dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
+        dataSource.setPassword("secret");
         return dataSource;
     }
 
